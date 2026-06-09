@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StrokeGuard AI - Trợ lý thông tin Đột quỵ & Sơ cứu y tế</title>
+    <meta name="description" content="StrokeGuard AI cung cấp thông tin tư vấn đột quỵ, dấu hiệu nhận biết (FAST), hướng dẫn sơ cứu khẩn cấp từ các nguồn y tế uy tín như Vinmec và Bệnh viện Tâm Anh.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Emergency Sticky Banner -->
+    <div id="emergency-banner" class="emergency-banner">
+        <div class="banner-content">
+            <span class="pulse-icon">⚠️</span>
+            <span class="banner-text"><strong>CẢNH BÁO KHẨN CẤP:</strong> Nếu có dấu hiệu <strong>Méo miệng (F), Yếu tay chân (A), Khó nói (S)</strong>, hãy gọi ngay cấp cứu <a href="tel:115" class="emergency-link">115</a> lập tức! Từng giây trôi qua đều quyết định sự sống của tế bào não.</span>
+        </div>
+        <button id="close-banner-btn" class="close-banner-btn" aria-label="Đóng cảnh báo">&times;</button>
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-container">
+                <span class="logo-icon">🛡️</span>
+                <div class="logo-text">
+                    <h1>StrokeGuard AI</h1>
+                    <p class="logo-tagline">Hệ thống Tư vấn & Giáo dục Đột quỵ</p>
+                </div>
+            </div>
+            
+            <div class="connection-status" id="connection-status">
+                <span class="status-dot offline" id="status-dot"></span>
+                <span class="status-text" id="status-text">Đang kiểm tra kết nối Ollama...</span>
+            </div>
+        </header>
+
+        <main class="main-layout">
+            <!-- Left Panel: Chat Interface -->
+            <section class="chat-panel" id="chat-section">
+                <div class="panel-header">
+                    <h2>Trò chuyện với Trợ lý AI</h2>
+                    <span class="model-badge" id="model-badge">Model: llama3.2</span>
+                </div>
+                
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Welcome message -->
+                    <div class="message system-message">
+                        <div class="message-avatar">🛡️</div>
+                        <div class="message-content">
+                            <p>Xin chào! Tôi là <strong>StrokeGuard AI</strong>, trợ lý ảo hỗ trợ thông tin y khoa về đột quỵ (tai biến mạch máu não).</p>
+                            <p>Tôi có thể giúp bạn hiểu rõ về:</p>
+                            <ul>
+                                <li>Triệu chứng nhận biết sớm đột quỵ (Quy tắc FAST).</li>
+                                <li>Cách sơ cứu chuẩn y khoa khi gặp người bị đột quỵ.</li>
+                                <li>Nguyên nhân, yếu tố nguy cơ và cách phòng ngừa đột quỵ.</li>
+                            </ul>
+                            <p class="note">⚠️ <em>Lưu ý: Tôi là trợ lý AI thông tin, không thay thế cho bác sĩ hoặc cấp cứu y khoa 115.</em></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Suggested prompts -->
+                <div class="suggested-prompts-container">
+                    <button class="prompt-btn" id="prompt-fast" data-prompt="Quy tắc FAST nhận biết đột quỵ là gì?">FAST là gì?</button>
+                    <button class="prompt-btn" id="prompt-firstaid" data-prompt="Cách sơ cứu chuẩn y khoa cho người bị đột quỵ như thế nào?">Cách sơ cứu đột quỵ?</button>
+                    <button class="prompt-btn" id="prompt-prevent" data-prompt="Làm thế nào để phòng tránh đột quỵ hiệu quả?">Cách phòng tránh đột quỵ?</button>
+                    <button class="prompt-btn" id="prompt-causes" data-prompt="Đột quỵ do những nguyên nhân chính nào gây ra?">Nguyên nhân đột quỵ?</button>
+                </div>
+
+                <!-- Chat input area -->
+                <form id="chat-form" class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Nhập câu hỏi của bạn về đột quỵ tại đây..." autocomplete="off" required>
+                    <button type="submit" id="send-btn" aria-label="Gửi tin nhắn">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M2,21L23,12L2,3V10L17,12L2,14V21Z" />
+                        </svg>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Right Panel: Scraped Knowledge Base & Active References -->
+            <aside class="kb-panel" id="kb-section">
+                <div class="panel-header">
+                    <h2>Cơ sở dữ liệu Y khoa</h2>
+                </div>
+                
+                <div class="panel-tabs">
+                    <button class="tab-btn active" id="tab-active-sources" data-tab="active-sources">Tài liệu tham khảo bài viết</button>
+                    <button class="tab-btn" id="tab-all-sources" data-tab="all-sources">Nguồn dữ liệu đã cào</button>
+                </div>
+
+                <div class="tab-content" id="tab-content">
+                    <!-- Active Sources -->
+                    <div class="tab-pane active" id="pane-active-sources">
+                        <div class="empty-state" id="active-sources-empty">
+                            <span class="empty-icon">📖</span>
+                            <p>Khi bạn gửi câu hỏi, các tài liệu tham khảo được sử dụng để trả lời sẽ xuất hiện tại đây.</p>
+                        </div>
+                        <div class="sources-list hidden" id="active-sources-list">
+                            <!-- Dynamic items go here -->
+                        </div>
+                    </div>
+
+                    <!-- All Scraped Sources -->
+                    <div class="tab-pane" id="pane-all-sources">
+                        <div class="scraped-sources-summary">
+                            <p>Hệ thống đã cào dữ liệu từ <strong>2 nguồn y tế uy tín</strong> với tổng cộng <strong id="total-chunks-count">0</strong> phân đoạn nội dung:</p>
+                            <div class="source-badges">
+                                <span class="badge badge-tamanh">Bệnh viện Tâm Anh</span>
+                                <span class="badge badge-vinmec">Bệnh viện Vinmec</span>
+                            </div>
+                        </div>
+                        <div class="sources-list" id="all-sources-list">
+                            <!-- All items go here -->
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <footer class="app-footer-bar">
+            <p>&copy; 2026 StrokeGuard AI. Dữ liệu được thu thập tự động từ <a href="https://tamanhhospital.vn" target="_blank" rel="noopener">Bệnh viện Tâm Anh</a> & <a href="https://www.vinmec.com" target="_blank" rel="noopener">Bệnh viện Vinmec</a>.</p>
+        </footer>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="/static/js/chat.js"></script>
+</body>
+</html>
