@@ -59,7 +59,7 @@ class StrokeRetriever:
                 
         query_tokens = tokenize(query)
         if not query_tokens:
-            return self.documents[:top_k]
+            return []
             
         unique_query_tokens = list(set(query_tokens))
         scores = []
@@ -103,9 +103,9 @@ class StrokeRetriever:
         # Keep only matches with a positive score
         results = [doc for score, doc in sorted_docs if score > 0]
         
-        # If no positive matches, fall back to default top chunks
+        # If no positive matches, return empty list
         if not results:
-            return self.documents[:top_k]
+            return []
             
         return results[:top_k]
 
