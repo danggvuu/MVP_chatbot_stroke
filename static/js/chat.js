@@ -26,9 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let conversationHistory = [
         {
             role: "assistant",
-            content: "Xin chào! Tôi là StrokeGuard AI, trợ lý ảo hỗ trợ thông tin y khoa về đột quỵ (tai biến mạch máu não). Tôi có thể giúp bạn hiểu rõ về triệu chứng nhận biết sớm, hướng dẫn sơ cứu chuẩn y khoa hoặc cách phòng tránh. Bạn muốn hỏi tôi điều gì?"
+            content: "Xin chào! Tôi là StrokeGuard AI, trợ lý ảo hỗ trợ thông tin y khoa về đột quỵ (tai biến mạch máu não). Tôi có thể giúp bạn hiểu rõ về triệu chứng nhận trước sớm, hướng dẫn sơ cứu chuẩn y khoa hoặc cách phòng tránh. Bạn muốn hỏi tôi điều gì?"
         }
     ];
+    let currentSources = [];
 
     // Initialize Page
     checkSystemStatus();
@@ -122,6 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             
                             // Check if this is the sources metadata event
                             if (jsonData.sources) {
+                                currentSources = jsonData.sources;
                                 renderActiveSources(jsonData.sources);
                             } 
                             // Check if this is a content token event
@@ -154,7 +156,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.addEventListener("click", (e) => {
             const link = e.target.closest(".citation-link");
             if (link) {
-                e.preventDefault();
+                if (link.getAttribute("href") === "#") {
+                    e.preventDefault();
+                }
                 const citationIdx = parseInt(link.getAttribute("data-citation")) - 1;
                 
                 // Switch view to active sources tab
@@ -372,8 +376,16 @@ document.addEventListener("DOMContentLoaded", () => {
         html = html.replace(/\*([\s\S]*?)\*/g, "<em>$1</em>");
         html = html.replace(/_([\s\S]*?)_/g, "<em>$1</em>");
 
-        // Parse citations: [1], [2], [3], [4] -> <a href="#" class="citation-link" data-citation="1">[1]</a>
-        html = html.replace(/\[([1-4])\]/g, '<a href="#" class="citation-link" data-citation="$1">[$1]</a>');
+        // Parse citations: [1], [2], [3], [4] -> <a href="url" target="_blank" class="citation-link" data-citation="1">[1 - Source]</a>
+        html = html.replace(/\[([1-4])\]/g, (match, p1) => {
+            const idx = parseInt(p1) - 1;
+            const src = (currentSources && currentSources[idx]) ? currentSources[idx] : null;
+            if (src) {
+                const shortSource = src.source.replace("Bệnh viện ", "").replace("Báo ", "");
+                return `<a href="${src.url}" target="_blank" rel="noopener" class="citation-link" data-citation="${p1}">[${p1} - ${shortSource}]</a>`;
+            }
+            return `<a href="#" class="citation-link" data-citation="${p1}">[${p1}]</a>`;
+        });
 
         // Parse blockquotes/warnings (like emergency disclaimers)
         html = html.replace(/^&gt; (.*$)/gim, '<blockquote>$1</blockquote>');
