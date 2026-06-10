@@ -5,6 +5,21 @@ import re
 from collections import Counter
 from underthesea import word_tokenize
 
+VIETNAMESE_STOPWORDS = {
+    'và', 'hoặc', 'nhưng', 'vì', 'nên', 'thì', 'ở', 'tại', 'có', 'không', 
+    'như', 'thế_nào', 'như_thế_nào', 'tôi', 'người', 'nhà', 'người_nhà', 
+    'này', 'được', 'cho', 'làm', 'sao', 'để', 'của', 'với', 'trong', 
+    'm', 'k', 'dc', 'ko', 'kh', 'đc', 'bị', 'đã', 'đang', 'sẽ', 
+    'chúng_tôi', 'chúng_ta', 'bạn', 'mình', 'nếu', 'là', 'cái', 'sự', 
+    'việc', 'những', 'các', 'ra', 'vào', 'lên', 'xuống', 'đi', 'lại', 
+    'qua', 'đến', 'nơi', 'nào', 'gì', 'ai', 'đâu', 'khi', 'lúc', 
+    'sau', 'trước', 'kia', 'đó', 'ấy', 'nọ', 'họ', 'nó', 'chúng', 
+    'ta', 'tự', 'thường', 'hay', 'rất', 'quá', 'lắm', 'hết', 'cơ', 
+    'bản', 'mỗi', 'một', 'cả', 'nhất', 'nhỏ', 'lớn', 'nhiều', 'ít', 
+    'vừa', 'mới', 'còn', 'đều', 'chỉ', 'cũng', 'vẫn', 'thế', 'nào',
+    'đó', 'đây', 'kia', 'nào', 'vậy'
+}
+
 def tokenize(text):
     if not text:
         return []
@@ -14,7 +29,8 @@ def tokenize(text):
     segmented = word_tokenize(text, format="text")
     # Remove punctuation and split by whitespace
     segmented = re.sub(r'[^\w\s]', ' ', segmented)
-    return [word for word in segmented.split() if word]
+    tokens = [word for word in segmented.split() if word]
+    return [t for t in tokens if t not in VIETNAMESE_STOPWORDS]
 
 class StrokeRetriever:
     def __init__(self, kb_path="data/knowledge_base.json"):
@@ -24,6 +40,7 @@ class StrokeRetriever:
         self.vocab = set()
         self.doc_freqs = Counter()
         self.N = 0
+        self.avg_doc_len = 0.0
         self.load_database()
 
     def load_database(self):
@@ -45,18 +62,15 @@ class StrokeRetriever:
         self.vocab = set(token for doc in self.doc_tokens for token in doc)
         
         self.doc_freqs = Counter()
+        total_len = 0
         for doc in self.doc_tokens:
+            total_len += len(doc)
             unique_tokens = set(doc)
             for token in unique_tokens:
                 self.doc_freqs[token] += 1
+        self.avg_doc_len = total_len / self.N if self.N > 0 else 0.0
                 
-    def search(self, query, top_k=3):
-        # Reload database if it was empty (e.g. if scraper just ran)
-        if not self.documents:
-            self.load_database()
-            if not self.documents:
-                return []
-                
+    def _search_single_query(self, query, k1=1.2, b=0.75, title_weight=2.0):
         query_tokens = tokenize(query)
         if not query_tokens:
             return []
@@ -73,41 +87,61 @@ class StrokeRetriever:
             title_tokens = tokenize(self.documents[i]['section_title'])
             matched_count = 0
             
-            # Calculate TF-IDF score
             for token in unique_query_tokens:
                 token_in_body = doc_counter[token] > 0
                 token_in_title = token in title_tokens
                 
                 if token_in_body or token_in_title:
                     matched_count += 1
-                    tf = doc_counter[token] / doc_len if doc_len > 0 else 0
                     
-                    if token_in_title:
-                        tf += 0.5  # Title boost factor
-                        
                     if token in self.vocab:
                         df = self.doc_freqs[token]
                         idf = math.log((self.N + 1) / (df + 0.5)) + 1
-                        score += tf * idf
+                        
+                        tf = doc_counter[token]
+                        body_score = idf * (tf * (k1 + 1)) / (tf + k1 * (1.0 - b + b * (doc_len / self.avg_doc_len)))
+                        title_score = (1.0 if token_in_title else 0.0) * idf * title_weight
+                        
+                        score += body_score + title_score
             
-            # Apply coordination factor: rewards documents matching more query terms
-            if matched_count > 0 and len(unique_query_tokens) > 0:
-                coordination = (matched_count / len(unique_query_tokens)) ** 2
-                score *= coordination
+            if score > 0:
+                scores.append((score, self.documents[i]))
+            
+        return sorted(scores, key=lambda x: x[0], reverse=True)
+
+    def search(self, query, top_k=4):
+        # Reload database if it was empty
+        if not self.documents:
+            self.load_database()
+            if not self.documents:
+                return []
                 
-            scores.append((score, self.documents[i]))
-            
-        # Sort by score descending
-        sorted_docs = sorted(scores, key=lambda x: x[0], reverse=True)
-        
-        # Keep only matches with a positive score
-        results = [doc for score, doc in sorted_docs if score > 0]
-        
-        # If no positive matches, return empty list
-        if not results:
+        # Split query by punctuation into sentences to perform multi-intent search
+        sentences = [s.strip() for s in re.split(r'[.!?]+', query) if s.strip()]
+        if not sentences:
             return []
             
-        return results[:top_k]
+        all_results = []
+        seen_ids = set()
+        
+        # Search each sentence separately
+        sentence_searches = [self._search_single_query(s) for s in sentences]
+        
+        # Interleave the search results from each sentence
+        max_len = max(len(lst) for lst in sentence_searches) if sentence_searches else 0
+        for idx in range(max_len):
+            for s_res in sentence_searches:
+                if idx < len(s_res):
+                    score, doc = s_res[idx]
+                    if doc['id'] not in seen_ids:
+                        seen_ids.add(doc['id'])
+                        all_results.append(doc)
+                        if len(all_results) >= top_k:
+                            break
+            if len(all_results) >= top_k:
+                break
+                
+        return all_results[:top_k]
 
 # Run simple test if executed directly
 if __name__ == "__main__":

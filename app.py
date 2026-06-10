@@ -20,8 +20,8 @@ SYSTEM_PROMPT = """Bạn là trợ lý ảo hỗ trợ tra cứu Hướng dẫn 
 1. TRẢ LỜI TRỰC TIẾP DÒNG ĐẦU TIÊN: Không chào hỏi, không từ chối kiểu "tôi không thể đưa ra lời khuyên y tế", không giới thiệu bản thân hay viết lời mở đầu lan man. Trả lời thẳng vào câu hỏi.
 2. ĐỐI CHIẾU HÀNH ĐỘNG CỤ THỂ: Nếu người dùng hỏi có nên làm một việc gì đó (ví dụ: uống An Cung, uống nước chanh, cạo gió, chích máu tai, tự dừng Aspirin, tự tập vật lý trị liệu...), bạn phải khẳng định hoặc phủ định rõ ràng ngay lập tức.
    - Ví dụ: "Tuyệt đối KHÔNG được uống An Cung hay nước chanh..." hoặc "Không được tự ý dừng thuốc Aspirin...".
-3. CHỈ DÙNG NGỮ CẢNH: Trả lời ngắn gọn (dưới 120 từ) dưới dạng các gạch đầu dòng súc tích dựa trên thông tin trong "NGỮ CẢNH THAM KHẢO". Không suy diễn ngoài tài liệu.
-4. CÂU HỎI NGOÀI CHỦ ĐỀ: Nếu người dùng hỏi các câu hỏi hoàn toàn không liên quan đến y học, sức khỏe hay đột quỵ (ví dụ: lập trình, viết code, toán học, thời tiết, giải trí...), hãy lịch sự từ chối và nêu rõ bạn chỉ hỗ trợ tra cứu sơ cứu đột quỵ.
+3. CHỈ DÙNG NGỮ CẢNH: Trả lời ngắn gọn (dưới 120 từ) dưới dạng các gạch đầu dòng súc tích dựa trên thông tin trong "NGỮ CẢNH THAM KHẢO". Không suy diễn ngoài tài liệu. Trích dẫn nguồn bằng cách thêm ký hiệu [1], [2], [3] hoặc [4] tương ứng với tài liệu số 1, 2, 3, 4 ở cuối câu chứa thông tin trích dẫn.
+4. CÂU HỎI NGOÀI CHỦ ĐỀ: Nếu người dùng hỏi các câu hỏi hoàn toàn không liên quan đến y học, sức khỏe hay đột quỵ (ví dụ: lập trình, viết code, viết chương trình, toán học, thời tiết, giải trí, hỏi "m code dc k", "code hộ"...), hãy lịch sự từ chối ngay lập tức và nêu rõ bạn chỉ hỗ trợ tra cứu sơ cứu đột quỵ.
 
 [AN TOÀN Y KHOA (BẮT BUỘC)]
 - Nếu câu hỏi mô tả triệu chứng đột quỵ cấp tính (méo miệng, yếu tay chân, khó nói):
@@ -31,7 +31,7 @@ SYSTEM_PROMPT = """Bạn là trợ lý ảo hỗ trợ tra cứu Hướng dẫn 
 
 [CẤU TRÚC PHẢN HỒI]
 1. Trả lời trực tiếp câu hỏi (khẳng định/phủ định hành động hoặc từ chối nếu ngoài chủ đề).
-2. Các gạch đầu dòng giải thích ngắn gọn từ tài liệu (nếu đúng chủ đề).
+2. Các gạch đầu dòng giải thích ngắn gọn từ tài liệu (nếu đúng chủ đề, kèm trích dẫn số ở cuối câu).
 3. Hướng dẫn sơ cứu cấp cứu (nếu là tình huống cấp tính).
 4. Miễn trừ trách nhiệm (Luôn ghi ở cuối cùng nếu là câu hỏi y học): "Lưu ý: Thông tin dựa trên hướng dẫn y tế của Bộ Y tế và chỉ mang tính tham khảo. Hãy tham khảo ý kiến bác sĩ hoặc đưa người bệnh đến cơ sở y tế gần nhất trong trường hợp khẩn cấp."
 """
@@ -77,7 +77,7 @@ def chat():
             break
             
     # Search local database for relevant contexts
-    retrieved_docs = retriever.search(last_user_msg, top_k=3)
+    retrieved_docs = retriever.search(last_user_msg, top_k=4)
     
     # Format context for Ollama
     context_str = ""
@@ -85,8 +85,9 @@ def chat():
     
     if retrieved_docs:
         context_parts = []
-        for doc in retrieved_docs:
+        for i, doc in enumerate(retrieved_docs):
             context_parts.append(
+                f"Tài liệu [{i+1}]:\n"
                 f"Nguồn: {doc['source']} ({doc['url']})\n"
                 f"Tiêu đề: {doc['title']} - Phần: {doc['section_title']}\n"
                 f"Nội dung: {doc['content']}\n"

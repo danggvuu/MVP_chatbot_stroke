@@ -750,3 +750,44 @@ body {
         padding: 12px 16px 16px 16px;
     }
 }
+
+/* Clickable Citation Links */
+.citation-link {
+    display: inline-block;
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    border: 1px solid rgba(14, 165, 233, 0.2);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin: 0 2px;
+    transition: var(--transition-smooth);
+}
+
+.citation-link:hover {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    box-shadow: 0 0 8px rgba(14, 165, 233, 0.4);
+}
+
+/* Flash Highlight for Reference Cards */
+.source-card.highlight-flash {
+    animation: flashHighlight 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes flashHighlight {
+    0% {
+        background-color: rgba(14, 165, 233, 0.4);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 15px var(--primary-color);
+        transform: scale(1.02);
+    }
+    100% {
+        background-color: rgba(13, 148, 136, 0.08);
+        border-color: var(--teal-color);
+        box-shadow: none;
+        transform: scale(1);
+    }
+}

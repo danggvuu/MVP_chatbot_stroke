@@ -149,6 +149,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error(err);
             }
         });
+
+        // Click citation link to highlight & scroll to source card
+        document.addEventListener("click", (e) => {
+            const link = e.target.closest(".citation-link");
+            if (link) {
+                e.preventDefault();
+                const citationIdx = parseInt(link.getAttribute("data-citation")) - 1;
+                
+                // Switch view to active sources tab
+                switchTab("active-sources");
+                
+                // Find cited card in active sources list
+                const cards = activeSourcesList.querySelectorAll(".source-card");
+                if (citationIdx >= 0 && citationIdx < cards.length) {
+                    const targetCard = cards[citationIdx];
+                    
+                    // Scroll to target card
+                    targetCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                    
+                    // Trigger visual flash highlight
+                    targetCard.classList.remove("highlight-flash");
+                    void targetCard.offsetWidth; // Trigger reflow to restart CSS animation
+                    targetCard.classList.add("highlight-flash");
+                }
+            }
+        });
     }
 
     // Check Backend & Ollama health
@@ -250,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
         activeSourcesList.classList.remove("hidden");
         activeSourcesList.innerHTML = "";
 
-        sources.forEach(src => {
+        sources.forEach((src, index) => {
             const card = document.createElement("div");
             card.className = "source-card highlighted";
             
@@ -259,6 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
             card.innerHTML = `
                 <div class="source-card-header">
                     <span class="source-card-badge badge ${badgeClass}">${src.source}</span>
+                    <span class="badge" style="background-color: var(--accent-color); color: white; font-size: 0.75rem; border-radius: 4px; padding: 2px 6px;">Tài liệu [${index + 1}]</span>
                     <span style="font-size:0.75rem; color:var(--text-muted)">ID Match: #${src.id}</span>
                 </div>
                 <div class="source-card-title">${src.title}</div>
@@ -344,6 +371,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Parse italic: *text* or _text_ -> <em>text</em>
         html = html.replace(/\*([\s\S]*?)\*/g, "<em>$1</em>");
         html = html.replace(/_([\s\S]*?)_/g, "<em>$1</em>");
+
+        // Parse citations: [1], [2], [3], [4] -> <a href="#" class="citation-link" data-citation="1">[1]</a>
+        html = html.replace(/\[([1-4])\]/g, '<a href="#" class="citation-link" data-citation="$1">[$1]</a>');
 
         // Parse blockquotes/warnings (like emergency disclaimers)
         html = html.replace(/^&gt; (.*$)/gim, '<blockquote>$1</blockquote>');
