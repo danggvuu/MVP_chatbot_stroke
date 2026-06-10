@@ -1,25 +1,88 @@
 # 🛡️ StrokeGuard AI - Trợ lý Sơ cứu Đột quỵ (CARDS RAG MVP)
 
-**StrokeGuard AI** là một hệ thống chatbot y khoa trợ giúp sơ cứu và tư vấn đột quỵ dựa trên Hướng dẫn của Bộ Y tế (Quyết định 3312/QĐ-BYT) và dữ liệu y khoa từ Vinmec & Bệnh viện Tâm Anh. Hệ thống sử dụng mô hình RAG Lexical (BM25) nâng cấp tách từ tiếng Việt để đảm bảo độ chính xác y tế tối đa.
+<div align="center">
+
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
+[![Flask](https://img.shields.io/badge/Flask-3.0+-000000.svg?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com)
+[![Ollama](https://img.shields.io/badge/Ollama-llama3.2-orange.svg?style=for-the-badge)](https://ollama.com)
+[![Docker](https://img.shields.io/badge/Docker-Compatible-2496ED.svg?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com)
+[![RAG](https://img.shields.io/badge/RAG-BM25-purple.svg?style=for-the-badge)](#)
+
+*Hệ thống trợ lý ảo sơ cứu đột quỵ y khoa chuẩn hóa theo Hướng dẫn của Bộ Y tế Việt Nam (QĐ 3312/QĐ-BYT).*
+
+[Khởi chạy nhanh](#-hướng-dẫn-khởi-chạy) • [Kiến trúc Pipeline](#-rag-pipeline-architecture) • [Tính năng nổi bật](#-tính-năng-cốt-lõi) • [Đánh giá Lâm sàng](#-chạy-thử-nghiệm-đánh-giá-lâm-sàng)
+
+</div>
 
 ---
 
-## 🚀 Hướng dẫn Khởi chạy Nhanh
+## ✨ Tính năng Cốt lõi
+
+*   **Tách từ tiếng Việt chuyên dụng (`underthesea`)**: Kết hợp các cụm từ chuyên môn đa âm tiết (như `đột_quỵ`, `nhồi_máu_n não`), ngăn chặn lỗi chia nhỏ token của mô hình ngôn ngữ tiếng Anh làm mất ngữ nghĩa.
+*   **Tìm kiếm từ khóa BM25 tối ưu**: Sử dụng thuật toán BM25 chuẩn hóa độ dài văn bản để khớp từ khóa chính xác nhất (thay thế cho TF-IDF).
+*   **Sentence-Split Interleaving**: Tách câu hỏi nhiều ý của người dùng thành các câu đơn độc lập, thực hiện tìm kiếm riêng lẻ và trộn xen kẽ (interleave) kết quả để đảm bảo cung cấp đầy đủ ngữ cảnh y khoa cho tất cả các ý cần trả lời.
+*   **Interactive Citation Links (Liên kết ngược bằng chứng)**: Tự động chuyển đổi trích dẫn `[1]`, `[2]` trong khung chat thành link hoạt họa. Khi nhấp vào, giao diện sẽ cuộn mượt và chớp sáng (flash) thẻ bài viết tương ứng ở thanh bên, đồng thời tự động mở trang web bài viết gốc của bệnh viện trong tab mới.
+*   **Streaming SSE siêu tốc**: Thời gian phản hồi từ LLM cục bộ xuống dưới 0.5 giây nhờ luồng dữ liệu Server-Sent Events (SSE).
+*   **Đánh giá an toàn 100%**: Đạt điểm tối đa về độ an toàn lâm sàng trên bộ khung kiểm thử của Frontiers 2024 / 2026.
+
+---
+
+## 📐 RAG Pipeline Architecture
+
+Hệ thống hoạt động dựa trên dòng chảy dữ liệu (dataflow) khép kín từ khâu cào dữ liệu đến tạo câu trả lời y khoa chuẩn xác:
+
+```mermaid
+flowchart TD
+    %% Styling
+    classDef yellow fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#fff;
+    classDef blue fill:#3b82f6,stroke:#2563eb,stroke-width:2px,color:#fff;
+    classDef green fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff;
+    classDef gray fill:#374151,stroke:#4b5563,stroke-width:1px,color:#fff;
+
+    subgraph DataPrep ["1. CHUẨN BỊ DỮ LIỆU"]
+        A[scraper.py] -->|Cào và làm sạch HTML| B[(data/knowledge_base.json)]
+    end
+
+    subgraph QueryFlow ["2. XỬ LÝ TRUY VẤN & RAG (retrieval.py)"]
+        User[Người dùng nhập câu hỏi] --> C{Tách câu đơn <br> Sentence Splitter}
+        C --> D[Tách từ tiếng Việt <br> underthesea Tokenizer]
+        D --> E[Bộ lọc từ dừng <br> Stopwords Filter]
+        E --> F[Tính điểm & Xếp hạng <br> BM25 Scorer]
+        B -.-> F
+        F --> G[Trộn xen kẽ & Chọn lọc <br> Interleaving Merger]
+    end
+
+    subgraph GenFlow ["3. TẠO PHẢN HỒI Y KHOA (app.py)"]
+        G -->|Top 4 Ngữ cảnh tham khảo| H[Tạo CARDS Prompt]
+        H --> I[Local Ollama <br> Llama 3.2]
+    end
+
+    subgraph UIFlow ["4. TƯƠNG TÁC GIAO DIỆN (Frontend JS/CSS)"]
+        I -->|SSE Stream token từng từ| J[Giao diện Chatbot]
+        J -->|Người dùng nhấp vào link chứng minh| K[Mở bài gốc + Cuộn chớp sáng thẻ tài liệu thanh bên]
+    end
+
+    class A,C,D,E,F,G blue;
+    class B,H green;
+    class I,J,K yellow;
+```
+
+---
+
+## 🚀 Hướng dẫn Khởi chạy
 
 ### Cách 1: Chạy bằng Docker (Khuyên dùng)
-*Đảm bảo ứng dụng chạy ổn định và độc lập trên cổng 5050.*
+*Phù hợp để triển khai nhanh, tự động đồng bộ hóa môi trường.*
 
-1. Đảm bảo đã bật **Docker Desktop** và đã tải mô hình `llama3.2` trên Ollama cục bộ (`ollama run llama3.2`).
-2. Chạy lệnh tại thư mục dự án:
+1. Đảm bảo **Docker Desktop** đang chạy và bạn đã tải mô hình `llama3.2` trên Ollama của máy tính host (`ollama run llama3.2`).
+2. Khởi chạy container:
    ```bash
    docker-compose up -d --build
    ```
 3. Truy cập địa chỉ: 👉 **[http://localhost:5050](http://localhost:5050)**
 
----
-
 ### Cách 2: Chạy trực tiếp bằng Python
-*Chạy trên môi trường ảo Python cục bộ trên cổng 5080.*
+*Chạy trên môi trường ảo Python cục bộ.*
 
 1. ** macOS / Linux:**
    ```bash
@@ -39,30 +102,7 @@
 
 ---
 
-## 📂 Cấu trúc Thư mục chính
-
-*   `app.py`: Backend Flask điều phối chat, SSE streaming, và gọi Ollama API.
-*   `retrieval.py`: Bộ máy tìm kiếm RAG sử dụng thuật toán BM25 nâng cấp và bộ lọc từ dừng tiếng Việt.
-*   `scraper.py`: Công cụ cào và làm sạch dữ liệu y khoa tự động từ Vinmec và Bệnh viện Tâm Anh.
-*   `evaluate_stroke_chatbot_2026.py`: Bộ khung đánh giá lâm sàng tự động (LLM-as-a-judge) với 5 ca lâm sàng phức tạp.
-*   `static/`: Chứa file giao diện CSS (glassmorphism), JS (SSE client, interactive citations) và sơ đồ kiến trúc động.
-*   `templates/`: Giao diện HTML của chatbot.
-
----
-
-## ⚙️ Điểm nổi bật về Kỹ thuật
-
-1.  **Tách từ tiếng Việt (Vietnamese Segmentation)**: Sử dụng thư viện `underthesea` liên kết các từ ghép (như `đột_quỵ`, `nhồi_máu_não`), ngăn chặn lỗi chia nhỏ từ của tokenizer tiếng Anh làm hỏng ngữ nghĩa.
-2.  **Bộ lọc từ dừng y khoa (Stopwords Filter)**: Lọc bỏ các từ chức năng phổ biến (`và`, `hoặc`, `như thế nào`, `m`, `k`...) để loại bỏ nhiễu tìm kiếm, giải quyết triệt để hiện tượng lấy nhầm văn bản y khoa khi hỏi câu hỏi ngoài chủ đề.
-3.  **Thuật toán BM25 & Sentence-Split Interleaving**:
-    *   Sử dụng BM25 chuẩn hóa độ dài văn bản (`k1=1.2`, `b=0.75`).
-    *   Tự động tách câu hỏi nhiều ý của người dùng thành các câu đơn, chạy BM25 độc lập rồi trộn xen kẽ (interleave) kết quả để đảm bảo ngữ cảnh của tất cả các ý đều được truyền vào LLM.
-4.  **Interactive Citation Links (Liên kết ngược bằng chứng)**: Tự động chuyển đổi các trích dẫn `[1]`, `[2]` trong câu trả lời thành link hoạt họa. Khi nhấp vào, giao diện sẽ cuộn mượt và kích hoạt hiệu ứng chớp sáng (highlight flash) thẻ tài liệu tham khảo tương ứng ở thanh bên.
-5.  **Thời gian phản hồi siêu tốc**: Tích hợp luồng dữ liệu Server-Sent Events (SSE) streaming giúp giảm thời gian phản hồi từ LLM xuống dưới 0.5 giây.
-
----
-
-## 🔬 Chạy thử nghiệm Đánh giá Lâm sàng (Clinical Evaluation)
+## 🔬 Chạy thử nghiệm Đánh giá Lâm sàng
 
 Hệ thống tích hợp bộ đánh giá tự động dựa trên Framework nghiên cứu lâm sàng 2026 (Đạt **100% điểm số an toàn y khoa**):
 
@@ -74,4 +114,4 @@ python evaluate_stroke_chatbot_2026.py
 export GEMINI_API_KEY="your_gemini_key"
 python evaluate_stroke_chatbot_2026.py
 ```
-Kết quả báo cáo chi tiết sẽ được tự động xuất ra file `data/evaluation_report_2026.md`.
+Kết quả chi tiết được ghi nhận tại thư mục `data/evaluation_report_2026.md`.
