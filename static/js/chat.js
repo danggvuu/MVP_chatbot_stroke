@@ -77,25 +77,72 @@ document.addEventListener("DOMContentLoaded", () => {
                 const response = await fetch("/api/chat", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ messages: conversationHistory })
+                    body: JSON.stringify({ 
+                        messages: conversationHistory,
+                        stream: true
+                    })
                 });
 
-                const data = await response.json();
-                
+                if (!response.ok) {
+                    const data = await response.json();
+                    typingIndicator.remove();
+                    const errMsg = data.error || "Có lỗi xảy ra khi kết nối tới máy chủ.";
+                    appendMessage("assistant", `⚠️ **Lỗi:** ${errMsg}\n\n*Chi tiết:* ${data.detail || "Không có"}`);
+                    return;
+                }
+
                 // Remove typing indicator
                 typingIndicator.remove();
 
-                if (response.ok) {
-                    // Append AI message to UI & history
-                    appendMessage("assistant", data.message);
-                    conversationHistory.push({ role: "assistant", content: data.message });
+                // Append empty assistant message bubble to stream tokens into
+                const assistantMessageDiv = appendEmptyMessage("assistant");
+                const contentDiv = assistantMessageDiv.querySelector(".message-content");
+                let fullText = "";
 
-                    // Render dynamic references used
-                    renderActiveSources(data.sources);
-                } else {
-                    const errMsg = data.error || "Có lỗi xảy ra khi kết nối tới máy chủ.";
-                    appendMessage("assistant", `⚠️ **Lỗi:** ${errMsg}\n\n*Chi tiết:* ${data.detail || "Không có"}`);
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder("utf-8");
+                let buffer = "";
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split("\n");
+                    
+                    // Keep last partial line in buffer
+                    buffer = lines.pop();
+
+                    for (const line of lines) {
+                        const cleanLine = line.trim();
+                        if (!cleanLine || !cleanLine.startsWith("data: ")) continue;
+
+                        try {
+                            const jsonData = JSON.parse(cleanLine.substring(6));
+                            
+                            // Check if this is the sources metadata event
+                            if (jsonData.sources) {
+                                renderActiveSources(jsonData.sources);
+                            } 
+                            // Check if this is a content token event
+                            else if (jsonData.delta) {
+                                fullText += jsonData.delta;
+                                contentDiv.innerHTML = parseMarkdown(fullText);
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                            }
+                            // Check if this is an error
+                            else if (jsonData.error) {
+                                contentDiv.innerHTML += `<br>⚠️ **Lỗi:** ${jsonData.error}`;
+                            }
+                        } catch (errParser) {
+                            console.error("Failed to parse stream line", errParser, cleanLine);
+                        }
+                    }
                 }
+
+                // Append the fully accumulated message to history
+                conversationHistory.push({ role: "assistant", content: fullText });
+
             } catch (err) {
                 typingIndicator.remove();
                 appendMessage("assistant", `⚠️ **Lỗi kết nối:** Không thể kết nối tới máy chủ Flask. Vui lòng kiểm tra xem server đã được khởi chạy chưa.`);
@@ -245,6 +292,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         chatMessages.appendChild(msgDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Append an empty assistant message bubble to prepare for streaming tokens
+    function appendEmptyMessage(role) {
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `message ${role}-message`;
+        const avatar = role === "user" ? "👤" : "🛡️";
+        msgDiv.innerHTML = `
+            <div class="message-avatar">${avatar}</div>
+            <div class="message-content"></div>
+        `;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        return msgDiv;
     }
 
     // Show loading typing indicator

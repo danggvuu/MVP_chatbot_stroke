@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from flask import Flask, request, jsonify, render_template, send_from_directory
+from flask import Flask, request, jsonify, render_template, send_from_directory, Response
 from retrieval import StrokeRetriever
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
@@ -68,6 +68,7 @@ def get_sources():
 def chat():
     data = request.json or {}
     messages = data.get("messages", [])
+    stream_requested = data.get("stream", False)
     
     if not messages:
         return jsonify({"error": "No messages provided"}), 400
@@ -130,12 +131,37 @@ def chat():
     payload = {
         "model": OLLAMA_MODEL,
         "messages": ollama_messages,
-        "stream": False,
+        "stream": stream_requested,
         "options": {
             "temperature": 0.3 # Low temperature for factual medical responses
         }
     }
     
+    if stream_requested:
+        def generate():
+            # Send citations first
+            yield f"data: {json.dumps({'sources': sources_metadata})}\n\n"
+            try:
+                r = requests.post(f"{OLLAMA_API_URL}/api/chat", json=payload, stream=True, timeout=45)
+                if r.status_code != 200:
+                    yield f"data: {json.dumps({'error': 'Ollama error', 'detail': r.text})}\n\n"
+                    return
+                for line in r.iter_lines():
+                    if line:
+                        decoded_line = line.decode('utf-8')
+                        try:
+                            json_line = json.loads(decoded_line)
+                            content = json_line.get("message", {}).get("content", "")
+                            if content:
+                                yield f"data: {json.dumps({'delta': content})}\n\n"
+                            if json_line.get("done", False):
+                                break
+                        except json.JSONDecodeError:
+                            pass
+            except Exception as e:
+                yield f"data: {json.dumps({'error': 'Connection error', 'detail': str(e)})}\n\n"
+        return Response(generate(), mimetype='text/event-stream')
+        
     try:
         response = requests.post(f"{OLLAMA_API_URL}/api/chat", json=payload, timeout=45)
         if response.status_code != 200:
