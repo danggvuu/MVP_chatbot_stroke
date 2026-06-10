@@ -50,7 +50,7 @@
 
 ---
 
-## ⚙️ Điểm nhấn Kỹ thuật cốt lõi (Chuẩn bị Phỏng vấn)
+## ⚙️ Điểm nổi bật về Kỹ thuật
 
 1.  **Tách từ tiếng Việt (Vietnamese Segmentation)**: Sử dụng thư viện `underthesea` liên kết các từ ghép (như `đột_quỵ`, `nhồi_máu_não`), ngăn chặn lỗi chia nhỏ từ của tokenizer tiếng Anh làm hỏng ngữ nghĩa.
 2.  **Bộ lọc từ dừng y khoa (Stopwords Filter)**: Lọc bỏ các từ chức năng phổ biến (`và`, `hoặc`, `như thế nào`, `m`, `k`...) để loại bỏ nhiễu tìm kiếm, giải quyết triệt để hiện tượng lấy nhầm văn bản y khoa khi hỏi câu hỏi ngoài chủ đề.
