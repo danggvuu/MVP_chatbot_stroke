@@ -13,7 +13,7 @@ def detect_chatbot_url():
         return env_url
         
     # Check if Docker port 5050 is open, otherwise fallback to local Python port 5000
-    for port in [5050, 5000]:
+    for port in [5080, 5050, 5000]:
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.settimeout(0.5)
@@ -21,7 +21,7 @@ def detect_chatbot_url():
                     return f"http://localhost:{port}/api/chat"
         except Exception:
             pass
-    return "http://localhost:5050/api/chat" # Default fallback
+    return "http://localhost:5080/api/chat" # Default fallback
 
 CHATBOT_API_URL = detect_chatbot_url()
 OLLAMA_API_URL = os.environ.get("OLLAMA_API_URL", "http://localhost:11434/api/chat")
