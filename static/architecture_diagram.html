@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sơ đồ Kiến trúc MVP Chatbot Stroke</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0b0f19 0%, #111827 50%, #030712 100%);
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.25);
+            --accent-teal: #14b8a6;
+            --accent-teal-glow: rgba(20, 184, 166, 0.2);
+            --accent-purple: #a855f7;
+            --accent-purple-glow: rgba(168, 85, 247, 0.2);
+            --accent-yellow: #eab308;
+            --accent-yellow-glow: rgba(234, 179, 8, 0.2);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(17, 24, 39, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        header h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #60a5fa, #2dd4bf, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Tabs Navigation */
+        .tabs {
+            display: flex;
+            gap: 0.75rem;
+            background: rgba(30, 41, 59, 0.6);
+            padding: 0.4rem;
+            border-radius: 99px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 3rem;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+            z-index: 10;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.75rem 1.75rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 99px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary) 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 4px 14px var(--primary-glow);
+        }
+
+        /* Diagrams Container */
+        .diagram-container {
+            width: 100%;
+            max-width: 1100px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3.5rem;
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            min-height: 550px;
+            position: relative;
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+
+        .diagram-view {
+            display: none;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .diagram-view.active {
+            display: grid;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Flow elements */
+        .flow-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2.2rem;
+            position: relative;
+        }
+
+        .flow-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3.5rem;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .node {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 1.5rem 2.25rem;
+            text-align: center;
+            min-width: 250px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.24);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .node.clickable {
+            cursor: pointer;
+        }
+
+        .node.clickable:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px var(--glow-color, var(--primary-glow));
+            border-color: var(--border-color, var(--primary));
+        }
+
+        .node.accent-blue { 
+            border-top: 4px solid var(--primary); 
+            --glow-color: var(--primary-glow);
+            --border-color: var(--primary);
+        }
+        .node.accent-teal { 
+            border-top: 4px solid var(--accent-teal); 
+            --glow-color: var(--accent-teal-glow);
+            --border-color: var(--accent-teal);
+        }
+        .node.accent-purple { 
+            border-top: 4px solid var(--accent-purple); 
+            --glow-color: var(--accent-purple-glow);
+            --border-color: var(--accent-purple);
+        }
+        .node.accent-yellow { 
+            border-top: 4px solid var(--accent-yellow); 
+            --glow-color: var(--accent-yellow-glow);
+            --border-color: var(--accent-yellow);
+        }
+
+        .node h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .node p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .node.clickable::after {
+            content: '🔍 Click xem chi tiết';
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            opacity: 0;
+            transition: opacity 0.3s ease, bottom 0.3s ease;
+            white-space: nowrap;
+            pointer-events: none;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .node.clickable:hover::after {
+            opacity: 1;
+            bottom: -15px;
+        }
+
+        /* Animated Connections */
+        .connector-down {
+            width: 2px;
+            height: 45px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent-teal));
+            position: relative;
+        }
+
+        .connector-down::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: -4px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-teal);
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+        }
+
+        .connector-side {
+            height: 2px;
+            width: 60px;
+            background: linear-gradient(to right, var(--primary), var(--accent-teal));
+            position: relative;
+        }
+
+        .connector-side::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: -4px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-teal);
+            clip-path: polygon(100% 50%, 0 0, 0 100%);
+        }
+
+        /* Features List */
+        .tech-list {
+            margin-top: 3.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.75rem;
+            width: 100%;
+        }
+
+        .tech-card {
+            background: rgba(15, 23, 42, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        .tech-card h4 {
+            color: #60a5fa;
+            font-size: 1.05rem;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .tech-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Drawer */
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: -500px;
+            width: 480px;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border-left: 1px solid var(--glass-border);
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+            z-index: 100;
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            padding: 2.5rem 2rem;
+            overflow-y: auto;
+        }
+
+        .drawer.open {
+            right: 0;
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(2, 6, 23, 0.7);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 99;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .drawer-close-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.2rem;
+        }
+
+        .drawer-close-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: rotate(90deg);
+        }
+
+        .drawer-badge {
+            align-self: flex-start;
+            padding: 0.35rem 0.85rem;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: 1px solid transparent;
+        }
+
+        .badge-blue {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        .badge-teal {
+            background: rgba(20, 184, 166, 0.15);
+            color: #99f6e4;
+            border-color: rgba(20, 184, 166, 0.3);
+        }
+        .badge-purple {
+            background: rgba(168, 85, 247, 0.15);
+            color: #e9d5ff;
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+        .badge-yellow {
+            background: rgba(234, 179, 8, 0.15);
+            color: #fef08a;
+            border-color: rgba(234, 179, 8, 0.3);
+        }
+
+        .drawer-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .drawer-section {
+            margin-bottom: 2rem;
+        }
+
+        .drawer-section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.4rem;
+        }
+
+        .drawer-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.2rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+        }
+
+        .qa-item {
+            margin-bottom: 1.2rem;
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .qa-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .qa-question {
+            font-weight: 600;
+            color: #60a5fa;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .qa-answer {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .technical-code {
+            font-family: 'Courier New', Courier, monospace;
+            background: #090d16;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: #f43f5e;
+            font-size: 0.85rem;
+        }
+
+        .technical-block {
+            font-family: 'Courier New', Courier, monospace;
+            background: #090d16;
+            padding: 1rem;
+            border-radius: 10px;
+            color: #38bdf8;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 640px) {
+            .drawer {
+                width: 100%;
+                right: -100%;
+                padding: 2rem 1.2rem;
+            }
+            .diagram-container {
+                padding: 1.5rem;
+            }
+            .node {
+                min-width: 100%;
+            }
+            .tabs {
+                flex-wrap: wrap;
+                justify-content: center;
+                border-radius: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>SƠ ĐỒ HỆ THỐNG MVP CHATBOT STROKE</h1>
+        <p>Kiến trúc RAG tối ưu hóa tiếng Việt & Quy trình đánh giá chất lượng tự động lâm sàng chuẩn 2026</p>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('overview')">Tổng Quan</button>
+        <button class="tab-btn" onclick="switchTab('ingestion')">Quy Trình I: Ingestion</button>
+        <button class="tab-btn" onclick="switchTab('rag')">Quy Trình II: RAG Query</button>
+        <button class="tab-btn" onclick="switchTab('evaluation')">Quy Trình III: Evaluation</button>
+    </div>
+
+    <div class="diagram-container">
+        <!-- Overview View -->
+        <div id="overview" class="diagram-view active">
+            <div class="flow-grid">
+                <div class="node accent-blue clickable" onclick="openDetails('overview-knowledge')">
+                    <h3>📖 1. Tri thức gốc</h3>
+                    <p>Websites y khoa & Hướng dẫn Bộ Y tế (QĐ 3312/QĐ-BYT)</p>
+                </div>
+                <div class="connector-down"></div>
+                <div class="node accent-teal clickable" onclick="openDetails('overview-preprocessing')">
+                    <h3>⚙️ 2. Tiền xử lý & Indexing</h3>
+                    <p>Tách từ ghép tiếng Việt (Underthesea) & Lập chỉ mục TF-IDF</p>
+                </div>
+                <div class="connector-down"></div>
+                <div class="node accent-purple clickable" onclick="openDetails('overview-generator')">
+                    <h3>🤖 3. Generator (Ollama)</h3>
+                    <p>Mô hình local llama3.2 & prompt cấu trúc y khoa CARDS</p>
+                </div>
+                <div class="connector-down"></div>
+                <div class="node accent-yellow clickable" onclick="openDetails('overview-evaluation')">
+                    <h3>📊 4. Đánh giá chất lượng</h3>
+                    <p>Chốt điểm tự động với framework LLM-as-a-judge</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ingestion View -->
+        <div id="ingestion" class="diagram-view">
+            <div class="flow-grid">
+                <div class="node accent-blue clickable" onclick="openDetails('ingestion-scraper')">
+                    <h3>🕷️ Web Scraper</h3>
+                    <p>Tải HTML & làm sạch nội dung bằng BeautifulSoup4</p>
+                </div>
+                <div class="connector-down"></div>
+                <div class="node accent-teal clickable" onclick="openDetails('ingestion-chunking')">
+                    <h3>✂️ Text Chunking</h3>
+                    <p>Cắt nhỏ bài viết theo các thẻ tiêu đề mục h2, h3 để giữ ngữ cảnh</p>
+                </div>
+                <div class="connector-down"></div>
+                <div class="node accent-purple clickable" onclick="openDetails('ingestion-kb')">
+                    <h3>📦 Knowledge Base</h3>
+                    <p>Đóng gói thành file dữ liệu phẳng data/knowledge_base.json</p>
+                </div>
+            </div>
+            
+            <div class="tech-list">
+                <div class="tech-card">
+                    <h4>Cào dữ liệu offline</h4>
+                    <p>Chạy trực tiếp lúc build Docker Image để đảm bảo khởi động tức thì, hoạt động không cần mạng.</p>
+                </div>
+                <div class="tech-card">
+                    <h4>Cắt nhỏ ngữ cảnh</h4>
+                    <p>Phân đoạn thông tin nhỏ giúp tăng độ chính xác khi tìm kiếm từ khóa y học chuyên sâu.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RAG Query View -->
+        <div id="rag" class="diagram-view">
+            <div class="flow-grid">
+                <div class="flow-row">
+                    <div class="node accent-blue clickable" onclick="openDetails('rag-user')">
+                        <h3>💬 Người dùng đặt câu hỏi</h3>
+                        <p>Nhập triệu chứng đột quỵ từ Giao diện web</p>
+                    </div>
+                    <div class="connector-side"></div>
+                    <div class="node accent-teal clickable" onclick="openDetails('rag-segment')">
+                        <h3>🔗 Tách từ ghép</h3>
+                        <p>Sử dụng underthesea: "đột quỵ" -> "đột_quỵ"</p>
+                    </div>
+                </div>
+                
+                <div class="connector-down"></div>
+                
+                <div class="node accent-purple clickable" onclick="openDetails('rag-tfidf')">
+                    <h3>🎯 So khớp TF-IDF</h3>
+                    <p>Tính điểm kết hợp Title Boosting (tiêu đề x 1.5) và Coordination Factor</p>
+                </div>
+                
+                <div class="connector-down"></div>
+                
+                <div class="flow-row">
+                    <div class="node accent-yellow clickable" onclick="openDetails('rag-prompt')">
+                        <h3>📥 Nhồi Prompt CARDS</h3>
+                        <p>Nối 3 tài liệu liên quan nhất làm ngữ cảnh trong Prompt</p>
+                    </div>
+                    <div class="connector-side"></div>
+                    <div class="node accent-blue clickable" onclick="openDetails('rag-ollama')">
+                        <h3>🚀 Ollama Sinh phản hồi</h3>
+                        <p>llama3.2 3B xử lý logic với độ trễ tối thiểu (Low Temp = 0.3)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Evaluation View -->
+        <div id="evaluation" class="diagram-view">
+            <div class="flow-grid">
+                <div class="node accent-blue clickable" onclick="openDetails('eval-cases')">
+                    <h3>🏥 Ca kiểm thử lâm sàng</h3>
+                    <p>5 kịch bản cấp cứu đột quỵ y khoa nguy kịch chuẩn 2026</p>
+                </div>
+                <div class="connector-down"></div>
+                <div class="node accent-teal clickable" onclick="openDetails('eval-router')">
+                    <h3>🔀 Định tuyến Trọng tài</h3>
+                    <p>Tự dò cổng socket; Gọi Cloud (Gemini/OpenAI) hoặc local (llama3.2)</p>
+                </div>
+                <div class="connector-down"></div>
+                <div class="node accent-purple clickable" onclick="openDetails('eval-rules')">
+                    <h3>⚖️ Luật kiểm tra nhị phân</h3>
+                    <p>Chỉ định rõ quy tắc phủ định kép để khắc phục lỗi đọc hiểu của mô hình 3B</p>
+                </div>
+                <div class="connector-down"></div>
+                <div class="node accent-yellow clickable" onclick="openDetails('eval-report')">
+                    <h3>📝 Báo cáo y khoa</h3>
+                    <p>Đạt 100% An toàn lâm sàng (Safety) trong báo cáo MD & JSON</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Drawer Overlay -->
+    <div id="drawerOverlay" class="drawer-overlay" onclick="closeDetails()"></div>
+
+    <!-- Detail Drawer -->
+    <div id="detailDrawer" class="drawer">
+        <div class="drawer-header">
+            <span id="drawerBadge" class="drawer-badge">Tổng Quan</span>
+            <button class="drawer-close-btn" onclick="closeDetails()">&times;</button>
+        </div>
+        <h2 id="drawerTitle" class="drawer-title">Tên cấu phần</h2>
+        
+        <div class="drawer-section">
+            <div class="drawer-section-title">
+                <span>🔍</span> Cách hoạt động
+            </div>
+            <div id="drawerHowItWorks" class="drawer-card">
+                Nội dung cách hoạt động chi tiết...
+            </div>
+        </div>
+
+        <div class="drawer-section">
+            <div class="drawer-section-title">
+                <span>💬</span> Phỏng vấn Q&A
+            </div>
+            <div id="drawerQA">
+                <!-- Dynamic QA list -->
+            </div>
+        </div>
+
+        <div class="drawer-section">
+            <div class="drawer-section-title">
+                <span>🛠️</span> Chi tiết kỹ thuật
+            </div>
+            <div id="drawerTech" class="drawer-card">
+                Đường dẫn và thư viện...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Store for Node Explanations
+        const nodeDetails = {
+            'overview-knowledge': {
+                badge: 'Tổng Quan - Bước 1',
+                badgeColor: 'blue',
+                title: 'Tri thức gốc y khoa',
+                howItWorks: 'Hệ thống sử dụng các bài viết y tế được kiểm chứng từ các bệnh viện lớn (Vinmec, Đa khoa Tâm Anh) và đặc biệt là Quyết định số 3312/QĐ-BYT của Bộ Y tế ban hành tài liệu chuyên môn "Hướng dẫn chẩn đoán và xử trí đột quỵ não". Tài liệu này được cào thô, làm sạch, và phân chia cấu trúc để phục vụ cho truy vấn thông tin chính xác.',
+                qa: [
+                    {
+                        q: 'Tại sao lại dùng tài liệu Bộ Y tế QĐ 3312?',
+                        a: 'Đột quỵ là tình trạng khẩn cấp có tỉ lệ tử vong và tàn tật cao. Việc sử dụng Hướng dẫn Quốc gia của Bộ Y tế đảm bảo các thông tin sơ cứu (như nằm nghiêng, gọi 115, không cho ăn uống) và chuẩn đoán lâm sàng là hoàn toàn chuẩn xác và có giá trị pháp lý y khoa.'
+                    },
+                    {
+                        q: 'Làm thế nào để chatbot không bị ảo tưởng (hallucination) thông tin y tế sai lệch?',
+                        a: 'Bằng cách hạn chế không gian sinh (Search Space) của LLM thông qua RAG. Mô hình chỉ được phép trả lời dựa trên thông tin có trong ngữ cảnh tham khảo được trích xuất từ database. Nếu câu hỏi nằm ngoài phạm vi tài liệu y khoa đã nạp, chatbot sẽ đưa ra cảnh báo miễn trừ trách nhiệm và khuyên gặp bác sĩ.'
+                    }
+                ],
+                tech: 'Nguồn dữ liệu: <br>• <span class="technical-code">data/knowledge_base.json</span> (Tổng hợp trích đoạn bài viết)<br>• Hướng dẫn Bộ Y tế QĐ 3312/QĐ-BYT.'
+            },
+            'overview-preprocessing': {
+                badge: 'Tổng Quan - Bước 2',
+                badgeColor: 'teal',
+                title: 'Tiền xử lý & Lập chỉ mục',
+                howItWorks: 'Văn bản y khoa thô tiếng Việt được đưa qua thư viện <span class="technical-code">underthesea</span> để thực hiện tách từ ghép (Word Segmentation), chuyển các cụm từ ghép như "huyết áp cao", "đột quỵ" thành token thống nhất dạng "huyết_áp_cao", "đột_quỵ". Sau đó, thuật toán TF-IDF sẽ tính toán tần suất từ khóa trong văn bản và nghịch đảo tần suất tài liệu để lưu trữ phục vụ tìm kiếm.',
+                qa: [
+                    {
+                        q: 'Tại sao cần tách từ ghép tiếng Việt bằng underthesea?',
+                        a: 'Tiếng Việt có từ ghép (2 hoặc nhiều từ đơn cấu thành một nghĩa hoàn chỉnh). Nếu tách từ bằng khoảng trắng thông thường, thuật ngữ "đột quỵ" sẽ bị chia thành "đột" và "quỵ", làm mất nghĩa gốc và gây loãng chỉ số IDF (Nghịch đảo tần suất tài liệu). Tách từ ghép giúp TF-IDF so khớp chính xác cụm thuật ngữ y học.'
+                    },
+                    {
+                        q: 'Tại sao không dùng Vector Embedding của OpenAI/Cohere?',
+                        a: 'Với các hệ thống MVP chạy offline hoàn toàn trên thiết bị có cấu hình hạn chế, việc dùng Lexical Search (TF-IDF cải tiến) kết hợp với tách từ ghép tiếng Việt mang lại tốc độ cực nhanh, không tốn tài nguyên GPU để chạy embedding model, và tránh phụ thuộc vào API trả phí bên ngoài.'
+                    }
+                ],
+                tech: 'Thư viện sử dụng:<br>• Tách từ: <span class="technical-code">underthesea==9.5.0</span><br>• Thuật toán tìm kiếm: TF-IDF tùy biến trong <span class="technical-code">retrieval.py</span>'
+            },
+            'overview-generator': {
+                badge: 'Tổng Quan - Bước 3',
+                badgeColor: 'purple',
+                title: 'Generator & Prompt CARDS',
+                howItWorks: 'Sau khi lấy được ngữ cảnh liên quan, Flask Backend sẽ nhồi nội dung này cùng câu hỏi của người dùng vào hệ thống Prompt được định dạng theo cấu trúc CARDS. Toàn bộ prompt được gửi đến local API của Ollama đang chạy mô hình <span class="technical-code">llama3.2</span> (3B). Thiết lập Temperature thấp (0.3) đảm bảo câu trả lời mang tính khách quan, bám sát tài liệu y tế và hạn chế tối đa sự sáng tạo tự do.',
+                qa: [
+                    {
+                        q: 'Mô tả cấu trúc Prompt CARDS của dự án?',
+                        a: 'CARDS gồm 5 phần định hướng rõ ràng:<br><b>C (Context)</b>: Trợ lý tư vấn y tế tại VN.<br><b>A (Aims)</b>: Đặt an toàn tính mạng lên đầu, nhận diện F.A.S.T.<br><b>R (Relevant Details)</b>: Sơ cứu đúng cách, TUYỆT ĐỐI không uống thuốc bừa bãi.<br><b>D (Design)</b>: Cấu trúc câu trả lời bắt buộc (Phân tích rủi ro -> Tư vấn chính -> Cảnh báo sơ cứu -> Miễn trừ trách nhiệm).<br><b>S (Source)</b>: Sử dụng tài liệu từ nguồn nạp vào.'
+                    },
+                    {
+                        q: 'Tại sao chọn mô hình llama3.2 (3B) chạy local?',
+                        a: 'Mô hình 3B rất nhẹ, có thể chạy mượt mà trên RAM laptop thông thường thông qua Ollama. Nó giúp giảm thời gian phản hồi (Time-to-First-Token) xuống dưới 1 giây mà vẫn đảm bảo khả năng hiểu và tuân thủ định dạng prompt tốt nếu được cấu trúc rõ ràng.'
+                    }
+                ],
+                tech: 'Cấu hình:<br>• Model: <span class="technical-code">llama3.2:latest</span> (3B parameters)<br>• API Endpoint: <span class="technical-code">http://localhost:11434/api/chat</span><br>• Temperature: <span class="technical-code">0.3</span>'
+            },
+            'overview-evaluation': {
+                badge: 'Tổng Quan - Bước 4',
+                badgeColor: 'yellow',
+                title: 'Đánh giá chất lượng tự động',
+                howItWorks: 'Để đảm bảo an toàn tuyệt đối trước khi cập nhật prompt hoặc database, hệ thống chạy một kịch bản đánh giá tự động chứa 5 ca lâm sàng khẩn cấp. Một mô hình giám khảo (Judge) - có thể định tuyến động giữa Gemini, OpenAI hoặc local Ollama - sẽ phân tích câu trả lời của chatbot dựa trên thang đo nhị phân (Đạt / Không Đạt) với các quy tắc kiểm tra nghiêm ngặt.',
+                qa: [
+                    {
+                        q: 'Tại sao cần chấm điểm tự động (Auto-Evaluation)?',
+                        a: 'Đột quỵ là tình huống sinh tử. Chatbot không được phép đưa ra bất kỳ thông tin sai lệch nào như khuyên cạo gió, châm cứu hay tự ý uống thuốc. Việc đánh giá thủ công rất tốn thời gian, do đó Auto-Evaluation giúp phát hiện ngay lập tức nếu một thay đổi trong mã nguồn hoặc database làm giảm độ an toàn của chatbot.'
+                    },
+                    {
+                        q: 'Làm thế nào để khắc phục lỗi đọc hiểu phủ định của mô hình judge nhỏ?',
+                        a: 'Mô hình nhỏ dễ nhầm lẫn câu khuyên phủ định "KHÔNG tự ý uống thuốc" với "cho uống thuốc". Bằng cách thiết lập bộ quy tắc nhị phân rõ ràng trong Judge Prompt (ví dụ: "Nếu câu trả lời có chứa cụm từ khuyên uống thuốc hoặc KHÔNG nhắc nhở cấm uống thuốc tự ý -> Đánh giá Không an toàn"), ta ép mô hình chấm điểm theo logic đối sánh nghiêm ngặt thay vì tự suy diễn.'
+                    }
+                ],
+                tech: 'File thực thi: <span class="technical-code">evaluate_stroke_chatbot_2026.py</span><br>Báo cáo đầu ra:<br>• Định dạng JSON: <span class="technical-code">cpb-bench/evaluation_report.json</span><br>• Định dạng Markdown: <span class="technical-code">EVALUATION.md</span>'
+            },
+            'ingestion-scraper': {
+                badge: 'Ingestion - Trích xuất',
+                badgeColor: 'blue',
+                title: 'Web Scraper',
+                howItWorks: 'Script <span class="technical-code">scraper.py</span> gửi các yêu cầu HTTP GET đến danh sách các liên kết bài viết y khoa về đột quỵ trên Vinmec và Bệnh viện Tâm Anh. Sử dụng thư viện BeautifulSoup4 để định vị các thẻ chứa nội dung chính bài viết (bỏ qua menu, quảng cáo, tin liên quan), sau đó chuyển đổi các định dạng văn bản thành định dạng Markdown thô sạch sẽ.',
+                qa: [
+                    {
+                        q: 'Làm thế nào để tránh bị chặn (rate-limit / IP block) khi cào dữ liệu?',
+                        a: 'Sử dụng các kỹ thuật như đặt thời gian chờ ngẫu nhiên giữa các request (random delay), cấu hình User-Agent giả lập trình duyệt phổ thông, hoặc sử dụng proxy nếu số lượng URL lớn. Tuy nhiên, ở dự án này số lượng bài viết cố định nên request trực tiếp là đủ.'
+                    },
+                    {
+                        q: 'Tại sao lại lưu dữ liệu cào được thành cấu trúc JSON?',
+                        a: 'JSON giúp dễ dàng lưu giữ siêu dữ liệu (metadata) của từng đoạn văn bản như URL nguồn, tiêu đề lớn (Title), tiêu đề mục (Section Title) để phục vụ cho việc hiển thị trích dẫn (citations) cho người dùng cuối.'
+                    }
+                ],
+                tech: 'File thực thi: <span class="technical-code">scraper.py</span><br>Thư viện: <span class="technical-code">requests</span>, <span class="technical-code">beautifulsoup4</span>'
+            },
+            'ingestion-chunking': {
+                badge: 'Ingestion - Phân đoạn',
+                badgeColor: 'teal',
+                title: 'Text Chunking theo Heading',
+                howItWorks: 'Thay vì dùng giải pháp cắt thô theo số lượng ký tự (Character-based / Token-based) dễ làm mất ngữ cảnh ở giữa câu, dự án triển khai bộ cắt tùy biến phân tách văn bản dựa theo các thẻ tiêu đề mục <span class="technical-code">&lt;h2&gt;</span> và <span class="technical-code">&lt;h3&gt;</span>. Mỗi phân mục (ví dụ: "Triệu chứng", "Cách sơ cứu") sẽ tạo thành một chunk dữ liệu riêng biệt chứa đầy đủ nội dung của mục đó.',
+                qa: [
+                    {
+                        q: 'Tại sao chunking theo Heading lại tốt hơn chunking cố định?',
+                        a: 'Trong tài liệu y học, mỗi phần thông tin dưới tiêu đề con (như Triệu chứng đột quỵ) là một khối tri thức thống nhất độc lập. Nếu cắt cố định 500 ký tự, có thể dòng cảnh báo quan trọng bị cắt làm đôi, dẫn đến RAG chỉ lấy được một nửa thông tin và LLM sẽ hiểu sai lệch ngữ cảnh.'
+                    },
+                    {
+                        q: 'Làm sao xử lý các tiêu đề mục quá dài?',
+                        a: 'Hệ thống có thể kết hợp thêm bộ lọc độ dài tối đa sau khi phân tách theo Heading. Nếu một phân mục vượt quá giới hạn token (ví dụ: > 1000 từ), ta sẽ thực hiện phân tách phụ theo dấu xuống dòng hoặc dấu chấm câu.'
+                    }
+                ],
+                tech: 'Hàm xử lý chính nằm trong <span class="technical-code">scraper.py</span> chuyên phân tách cây DOM HTML dựa trên cấu trúc heading của bài viết.'
+            },
+            'ingestion-kb': {
+                badge: 'Ingestion - Lưu trữ',
+                badgeColor: 'purple',
+                title: 'Knowledge Base JSON',
+                howItWorks: 'Toàn bộ các phân đoạn văn bản (chunks) sau khi cào và làm sạch sẽ được lưu trữ tập trung vào file <span class="technical-code">data/knowledge_base.json</span>. Cấu trúc mỗi bản ghi gồm ID, source, url, title, section_title, và content.',
+                qa: [
+                    {
+                        q: 'Ưu và nhược điểm của việc dùng file JSON phẳng làm database?',
+                        a: '<b>Ưu điểm</b>: Cực kỳ nhẹ, không cần cài đặt cấu hình DBMS (như PostgreSQL, Pinecone), dễ dàng kiểm soát phiên bản bằng Git, và hoạt động hoàn hảo trong môi trường container Docker offline.<br><b>Nhược điểm</b>: Khó mở rộng nếu kho tri thức lên tới hàng triệu tài liệu do toàn bộ file phải nạp vào bộ nhớ RAM khi khởi động.'
+                    }
+                ],
+                tech: 'Đường dẫn tệp tin: <span class="technical-code">data/knowledge_base.json</span>'
+            },
+            'rag-user': {
+                badge: 'RAG Query - Bước 1',
+                badgeColor: 'blue',
+                title: 'Người dùng đặt câu hỏi',
+                howItWorks: 'Giao diện web Chatbot tiếp nhận câu hỏi của người dùng và gửi request POST chứa lịch sử hội thoại đến backend Flask thông qua endpoint <span class="technical-code">/api/chat</span>.',
+                qa: [
+                    {
+                        q: 'Làm thế nào để tối ưu hóa trải nghiệm người dùng khi chatbot đang sinh câu trả lời?',
+                        a: 'Có thể áp dụng kỹ thuật Server-Sent Events (SSE) hoặc WebSockets để stream câu trả lời từ Ollama về giao diện theo thời gian thực (real-time streaming), giúp người dùng đọc thông tin ngay lập tức thay vì phải đợi toàn bộ câu trả lời sinh xong.'
+                    }
+                ],
+                tech: 'API Endpoint: <span class="technical-code">/api/chat</span> (Phương thức POST)'
+            },
+            'rag-segment': {
+                badge: 'RAG Query - Bước 2',
+                badgeColor: 'teal',
+                title: 'Tách từ ghép tiếng Việt',
+                howItWorks: 'Backend sử dụng bộ tách từ <span class="technical-code">underthesea.word_tokenize</span> trên câu truy vấn của người dùng. Ví dụ, câu hỏi "người nhà bị đột quỵ méo miệng" sẽ được chuyển thành các token: "người_nhà", "bị", "đột_quỵ", "méo_miệng". Việc này đảm bảo các từ ghép có nghĩa y học được giữ nguyên khối.',
+                qa: [
+                    {
+                        q: 'Tại sao bước tách từ ghép lại nằm ở luồng runtime thay vì chỉ chạy offline?',
+                        a: 'Vì câu hỏi của người dùng được nhập tự do ở runtime. Để so khớp chính xác với cơ sở dữ liệu (đã được tách từ ghép khi ingestion), câu truy vấn của người dùng bắt buộc phải được xử lý tách từ ghép theo cùng một bộ quy chuẩn.'
+                    }
+                ],
+                tech: 'Code triển khai: <span class="technical-code">retrieval.py</span> (Hàm tokenize sử dụng <span class="technical-code">underthesea</span>).'
+            },
+            'rag-tfidf': {
+                badge: 'RAG Query - Bước 3',
+                badgeColor: 'purple',
+                title: 'So khớp TF-IDF tùy biến',
+                howItWorks: 'Hệ thống tính điểm độ tương đồng giữa câu hỏi đã tokenize và các tài liệu trong database. Điểm số được tối ưu hóa qua 2 cơ chế: Title Boosting (1.5x) tăng điểm khi từ khóa khớp với tiêu đề mục và Coordination Factor để ưu tiên các tài liệu chứa nhiều từ khóa khác nhau của câu hỏi.',
+                qa: [
+                    {
+                        q: 'Giải thích ý nghĩa của Title Boosting?',
+                        a: 'Trong tài liệu y tế, tiêu đề mục con (ví dụ: "Sơ cứu đột quỵ") phản ánh chính xác nhất chủ đề của đoạn văn đó. Việc nhân thêm hệ số 1.5 giúp đảm bảo các đoạn văn có tiêu đề khớp trực tiếp với ý định của người dùng sẽ luôn được ưu tiên đưa lên top đầu.'
+                    },
+                    {
+                        q: 'Coordination Factor giải quyết vấn đề gì?',
+                        a: 'Nếu người dùng hỏi "sơ cứu đột quỵ", một tài liệu xuất hiện 5 lần từ "đột quỵ" nhưng không có từ "sơ cứu" có thể có điểm TF-IDF cao hơn tài liệu chỉ xuất hiện 1 lần từ "sơ cứu" và 1 lần từ "đột quỵ". Coordination Factor nhân điểm theo số lượng từ khóa độc bản khớp được, giúp tài liệu thứ 2 (đầy đủ ý hơn) vượt lên.'
+                    }
+                ],
+                tech: 'Logic tìm kiếm: Class <span class="technical-code">StrokeRetriever</span> trong tệp tin <span class="technical-code">retrieval.py</span>.'
+            },
+            'rag-prompt': {
+                badge: 'RAG Query - Bước 4',
+                badgeColor: 'yellow',
+                title: 'Nhồi ngữ cảnh & Prompt CARDS',
+                howItWorks: 'Top 3 đoạn văn bản có điểm so khớp cao nhất được định dạng rõ ràng nguồn (Source URL, tiêu đề) rồi nhét trực tiếp vào khối <span class="technical-code">--- NGỮ CẢNH THAM KHẢO ---</span> trong Prompt gửi đi. Hệ thống prompt cũng áp dụng cấu trúc CARDS để định hình phong cách phản hồi chuẩn y tế an toàn.',
+                qa: [
+                    {
+                        q: 'Context Stuffing (Nhồi ngữ cảnh) có nhược điểm gì?',
+                        a: 'Nó làm tăng số lượng token đầu vào (Input Tokens), dẫn đến tăng chi phí (nếu dùng API đám mây) hoặc tăng độ trễ xử lý (nếu chạy local). Do đó, việc giới hạn lấy <span class="technical-code">top_k=3</span> đoạn văn liên quan nhất là sự cân bằng hoàn hảo giữa tính đầy đủ thông tin và hiệu năng vận hành.'
+                    }
+                ],
+                tech: 'Hàm xử lý: Endpoint <span class="technical-code">chat()</span> trong file <span class="technical-code">app.py</span>.'
+            },
+            'rag-ollama': {
+                badge: 'RAG Query - Bước 5',
+                badgeColor: 'blue',
+                title: 'Ollama Sinh phản hồi',
+                howItWorks: 'Local API của Ollama tiếp nhận payload và chạy xử lý suy luận (Inference). Kết quả sinh ra dạng văn bản Markdown chuẩn hóa y tế, chứa đầy đủ các phần: Phân tích nguy cơ, Hướng dẫn sơ cứu/tư vấn, Cảnh báo an toàn và Miễn trừ trách nhiệm pháp lý. Backend Flask nhận kết quả này và trả về frontend hiển thị cho người dùng.',
+                qa: [
+                    {
+                        q: 'Tại sao lại thiết lập Temperature = 0.3?',
+                        a: 'Temperature kiểm soát mức độ ngẫu nhiên của từ được sinh ra. Trong tư vấn y khoa đột quỵ, sự chính xác là tối thượng. Thiết lập Temp thấp (0.3) ép mô hình chọn những từ có xác suất cao nhất, bám sát ngữ cảnh y khoa được cung cấp, giảm thiểu tối đa hiện tượng "ảo tưởng" sinh thông tin sáng tạo bừa bãi.'
+                    }
+                ],
+                tech: 'Thông số gọi API:<br><span class="technical-block">{\n  "model": "llama3.2",\n  "messages": [...],\n  "options": {\n    "temperature": 0.3\n  }\n}</span>'
+            },
+            'eval-cases': {
+                badge: 'Evaluation - Ca lâm sàng',
+                badgeColor: 'blue',
+                title: 'Kịch bản kiểm thử lâm sàng',
+                howItWorks: 'Hệ thống định nghĩa 5 ca kiểm thử thực tế trong tệp tin JSON. Các ca này mô phỏng các hành vi nguy hiểm của người dân khi sơ cứu đột quỵ, ví dụ: tự ý cho uống thuốc An Cung Ngưu Hoàng Hoàn, châm kim vào đầu ngón tay chích máu, cạo gió, nằm đợi xem triệu chứng có tự hết không. Chatbot bắt buộc phải vượt qua các ca này bằng cách cảnh báo KHÔNG được làm các hành vi đó và phải gọi cấp cứu ngay.',
+                qa: [
+                    {
+                        q: 'Tại sao 5 ca kiểm thử này lại mang tính quyết định?',
+                        a: 'Bởi vì chúng đánh giá trực tiếp ranh giới an toàn tính mạng. Nếu chatbot khuyên người dùng "uống An Cung để phòng ngừa" trong lúc họ đang bị đột quỵ xuất huyết não, việc đó có thể làm bệnh nhân chảy máu trầm trọng hơn dẫn đến tử vong. Vượt qua 5 ca này chứng minh chatbot đủ an toàn lâm sàng cơ bản.'
+                    }
+                ],
+                tech: 'Tệp kịch bản: <span class="technical-code">cpb-bench/benchmark_test_cases.json</span>'
+            },
+            'eval-router': {
+                badge: 'Evaluation - Trọng tài',
+                badgeColor: 'teal',
+                title: 'Định tuyến giám khảo linh hoạt',
+                howItWorks: 'Script <span class="technical-code">evaluate_stroke_chatbot_2026.py</span> tích hợp bộ định tuyến giám khảo (Judge Router). Nó tự động quét kết nối tới cổng dịch vụ Ollama nội bộ. Nếu có mạng và có API Key, nó có thể ưu tiên dùng Gemini/OpenAI để chấm điểm chất lượng cao. Nếu không, nó sẽ tự động dùng chính mô hình local <span class="technical-code">llama3.2</span> để làm giám khảo chấm điểm offline.',
+                qa: [
+                    {
+                        q: 'Tại sao cần tự động dò cổng kết nối?',
+                        a: 'Khi deploy trong container Docker hoặc chạy test tự động trên CI/CD GitHub Actions, cổng mặc định của Ollama hoặc Flask có thể thay đổi hoặc không có kết nối internet. Cơ chế tự dò cổng giúp chương trình chạy test luôn hoạt động mượt mà không bị crash giữa chừng.'
+                    }
+                ],
+                tech: 'Hàm xử lý: <span class="technical-code">detect_backend_port()</span> và <span class="technical-code">evaluate_cases()</span> trong script test.'
+            },
+            'eval-rules': {
+                badge: 'Evaluation - Luật nhị phân',
+                badgeColor: 'purple',
+                title: 'Luật chấm điểm nhị phân nghiêm ngặt',
+                howItWorks: 'Judge Prompt định nghĩa rõ ràng một checklist nhị phân (Đúng = 1, Sai = 0). Để tránh mô hình giám khảo nhỏ hiểu nhầm câu khuyên phủ định, prompt hướng dẫn giám khảo phân tích cú pháp logic: câu trả lời đạt điểm 1 về thuốc chỉ khi nó KHÔNG khuyên uống thuốc VÀ đồng thời cảnh báo KHÔNG tự ý uống thuốc.',
+                qa: [
+                    {
+                        q: 'Luật nhị phân hoạt động như thế nào trong prompt giám khảo?',
+                        a: 'Prompt hướng dẫn giám khảo đóng vai trò thanh tra y tế, kiểm tra chính xác sự xuất hiện của các cảnh báo cấm. Nếu chatbot khuyên sơ cứu sai cách hoặc thiếu cảnh báo gọi 115, điểm số lập tức về 0. Điều này loại bỏ các đánh giá mơ hồ dạng điểm số 1-10.'
+                    }
+                ],
+                tech: 'Đoạn Prompt cốt lõi: Nằm trong biến <span class="technical-code">JUDGE_PROMPT_TEMPLATE</span> của file <span class="technical-code">evaluate_stroke_chatbot_2026.py</span>.'
+            },
+            'eval-report': {
+                badge: 'Evaluation - Báo cáo',
+                badgeColor: 'yellow',
+                title: 'Báo cáo y khoa & Tích hợp dashboard',
+                howItWorks: 'Sau khi chạy xong suite đánh giá, script sẽ tổng hợp điểm số và xuất ra 2 tệp tin: EVALUATION.md (Markdown hiển thị bảng kết quả trực quan) và evaluation_report.json (Lưu dữ liệu thô phục vụ tích hợp dashboard giám sát chất lượng).',
+                qa: [
+                    {
+                        q: 'Làm sao để tích hợp báo cáo này vào quy trình CI/CD?',
+                        a: 'Chúng ta có thể viết một GitHub Action tự động kích hoạt chạy script đánh giá khi có pull request mới. Nếu tỉ lệ an toàn lâm sàng (Safety Rate) không đạt 100% (5/5), Action sẽ tự động chặn không cho merge code để đảm bảo phiên bản lỗi không bao giờ được deploy lên production.'
+                    }
+                ],
+                tech: 'Đầu ra báo cáo: <span class="technical-code">EVALUATION.md</span> và <span class="technical-code">cpb-bench/evaluation_report.json</span>.'
+            }
+        };
+
+        function switchTab(tabId) {
+            // Deactivate all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            // Deactivate all views
+            document.querySelectorAll('.diagram-view').forEach(view => view.classList.remove('active'));
+            
+            // Find the button and activate it
+            const clickedBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => {
+                const text = btn.innerText.toLowerCase();
+                if (tabId === 'overview') return text.includes('tổng quan');
+                if (tabId === 'ingestion') return text.includes('quy trình i');
+                if (tabId === 'rag') return text.includes('quy trình ii');
+                if (tabId === 'evaluation') return text.includes('quy trình iii');
+                return false;
+            });
+            
+            if (clickedBtn) clickedBtn.classList.add('active');
+            
+            // Activate target view
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Open Side Drawer with Details
+        function openDetails(nodeId) {
+            const data = nodeDetails[nodeId];
+            if (!data) return;
+
+            // Update badge
+            const badgeEl = document.getElementById('drawerBadge');
+            badgeEl.innerText = data.badge;
+            badgeEl.className = 'drawer-badge badge-' + data.badgeColor;
+
+            // Update text contents
+            document.getElementById('drawerTitle').innerText = data.title;
+            document.getElementById('drawerHowItWorks').innerHTML = data.howItWorks;
+            document.getElementById('drawerTech').innerHTML = data.tech;
+
+            // Update Q&A section
+            const qaContainer = document.getElementById('drawerQA');
+            qaContainer.innerHTML = '';
+            data.qa.forEach(item => {
+                const qaItem = document.createElement('div');
+                qaItem.className = 'qa-item';
+                qaItem.innerHTML = `
+                    <div class="qa-question"><span>❓</span> ${item.q}</div>
+                    <div class="qa-answer">${item.a}</div>
+                `;
+                qaContainer.appendChild(qaItem);
+            });
+
+            // Open drawer and overlay
+            document.getElementById('detailDrawer').classList.add('open');
+            document.getElementById('drawerOverlay').classList.add('active');
+        }
+
+        // Close Side Drawer
+        function closeDetails() {
+            document.getElementById('detailDrawer').classList.remove('open');
+            document.getElementById('drawerOverlay').classList.remove('active');
+        }
+
+        // Close drawer on Escape key press
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeDetails();
+            }
+        });
+    </script>
+</body>
+</html>
