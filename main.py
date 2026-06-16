@@ -1,10 +1,22 @@
 import os
 import json
+import argparse
 import requests
-from flask import Flask, request, jsonify, render_template, send_from_directory, Response
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse, HTMLResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from dotenv import load_dotenv
+
 from retrieval import StrokeRetriever
 
-app = Flask(__name__, static_folder="static", template_folder="templates")
+load_dotenv()
+
+app = FastAPI(title="StrokeGuard AI API", version="2.0.0")
+
+# Mount static files
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 # Configuration from environment variables
 OLLAMA_API_URL = os.environ.get("OLLAMA_API_URL", "http://localhost:11434").rstrip('/')
@@ -36,19 +48,16 @@ SYSTEM_PROMPT = """Bạn là trợ lý ảo hỗ trợ tra cứu Hướng dẫn 
 4. Miễn trừ trách nhiệm (Luôn ghi ở cuối cùng nếu là câu hỏi y học): "Lưu ý: Thông tin dựa trên hướng dẫn y tế của Bộ Y tế và chỉ mang tính tham khảo. Hãy tham khảo ý kiến bác sĩ hoặc đưa người bệnh đến cơ sở y tế gần nhất trong trường hợp khẩn cấp."
 """
 
+@app.get("/", response_class=HTMLResponse)
+async def index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/api/sources', methods=['GET'])
-def get_sources():
+@app.get("/api/sources")
+async def get_sources():
     """Returns a list of all documents indexed in the database."""
     if not retriever.documents:
         retriever.load_database()
     
-    # Return brief metadata of all sections
     sources_summary = []
     for doc in retriever.documents:
         sources_summary.append({
@@ -58,28 +67,38 @@ def get_sources():
             "title": doc["title"],
             "section_title": doc["section_title"]
         })
-    return jsonify(sources_summary)
+    return sources_summary
 
-@app.route('/api/chat', methods=['POST'])
-def chat():
-    data = request.json or {}
+@app.post("/api/retrieve")
+async def retrieve_only(request: Request):
+    """Retrieve chunks only without calling LLM."""
+    data = await request.json()
+    query = data.get("question", "")
+    top_k = data.get("top_k", 4)
+    
+    if not query:
+        return JSONResponse(content={"error": "No question provided"}, status_code=400)
+        
+    retrieved_docs = retriever.search(query, top_k=top_k)
+    return {"question": query, "chunks": retrieved_docs}
+
+@app.post("/api/chat")
+async def chat(request: Request):
+    data = await request.json()
     messages = data.get("messages", [])
     stream_requested = data.get("stream", False)
     
     if not messages:
-        return jsonify({"error": "No messages provided"}), 400
+        return JSONResponse(content={"error": "No messages provided"}, status_code=400)
         
-    # Get the last user message to use as the retrieval query
     last_user_msg = ""
     for msg in reversed(messages):
         if msg.get("role") == "user":
             last_user_msg = msg.get("content", "")
             break
             
-    # Search local database for relevant contexts
     retrieved_docs = retriever.search(last_user_msg, top_k=4)
     
-    # Format context for Ollama
     context_str = ""
     sources_metadata = []
     
@@ -104,11 +123,8 @@ def chat():
     else:
         context_str = "Không tìm thấy tài liệu liên quan trong cơ sở dữ liệu nội bộ."
 
-    # Construct the final message history to send to Ollama
-    # 1. Start with system prompt
     ollama_messages = [{"role": "system", "content": SYSTEM_PROMPT}]
     
-    # 2. Append conversation history (except the very last user message which we will enrich)
     history_messages = messages[:-1] if len(messages) > 1 else []
     for msg in history_messages:
         ollama_messages.append({
@@ -116,7 +132,6 @@ def chat():
             "content": msg.get("content")
         })
         
-    # 3. Append the enriched last user message containing the context
     user_enriched_content = (
         f"Hãy trả lời câu hỏi dưới đây của tôi.\n\n"
         f"--- NGỮ CẢNH THAM KHẢO ---\n{context_str}\n--------------------------\n\n"
@@ -124,66 +139,65 @@ def chat():
     )
     ollama_messages.append({"role": "user", "content": user_enriched_content})
     
-    # Call local Ollama API
     payload = {
         "model": OLLAMA_MODEL,
         "messages": ollama_messages,
         "stream": stream_requested,
         "options": {
-            "temperature": 0.3 # Low temperature for factual medical responses
+            "temperature": 0.3
         }
     }
     
     if stream_requested:
-        def generate():
-            # Send citations first
+        def event_stream():
             yield f"data: {json.dumps({'sources': sources_metadata})}\n\n"
             try:
-                r = requests.post(f"{OLLAMA_API_URL}/api/chat", json=payload, stream=True, timeout=45)
-                if r.status_code != 200:
-                    yield f"data: {json.dumps({'error': 'Ollama error', 'detail': r.text})}\n\n"
-                    return
-                for line in r.iter_lines():
-                    if line:
-                        decoded_line = line.decode('utf-8')
-                        try:
-                            json_line = json.loads(decoded_line)
-                            content = json_line.get("message", {}).get("content", "")
-                            if content:
-                                yield f"data: {json.dumps({'delta': content})}\n\n"
-                            if json_line.get("done", False):
-                                break
-                        except json.JSONDecodeError:
-                            pass
+                with requests.post(f"{OLLAMA_API_URL}/api/chat", json=payload, stream=True, timeout=45) as r:
+                    if r.status_code != 200:
+                        yield f"data: {json.dumps({'error': 'Ollama error', 'detail': r.text})}\n\n"
+                        return
+                    for line in r.iter_lines():
+                        if line:
+                            decoded_line = line.decode('utf-8')
+                            try:
+                                json_line = json.loads(decoded_line)
+                                content = json_line.get("message", {}).get("content", "")
+                                if content:
+                                    yield f"data: {json.dumps({'delta': content})}\n\n"
+                                if json_line.get("done", False):
+                                    break
+                            except json.JSONDecodeError:
+                                pass
             except Exception as e:
                 yield f"data: {json.dumps({'error': 'Connection error', 'detail': str(e)})}\n\n"
-        return Response(generate(), mimetype='text/event-stream')
+        headers = {
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no"
+        }
+        return StreamingResponse(event_stream(), media_type="text/event-stream", headers=headers)
         
     try:
         response = requests.post(f"{OLLAMA_API_URL}/api/chat", json=payload, timeout=45)
         if response.status_code != 200:
-            return jsonify({
-                "error": f"Ollama returned error status {response.status_code}",
-                "detail": response.text
-            }), 502
+            return JSONResponse(
+                content={"error": f"Ollama returned error status {response.status_code}", "detail": response.text}, 
+                status_code=502
+            )
             
         ollama_res = response.json()
         assistant_message = ollama_res.get("message", {}).get("content", "")
         
-        return jsonify({
-            "message": assistant_message,
-            "sources": sources_metadata
-        })
+        return {"message": assistant_message, "sources": sources_metadata}
         
     except requests.exceptions.RequestException as e:
-        return jsonify({
-            "error": "Could not connect to Ollama server. Please ensure Ollama is running.",
-            "detail": str(e),
-            "ollama_url": OLLAMA_API_URL
-        }), 503
+        return JSONResponse(
+            content={"error": "Could not connect to Ollama server.", "detail": str(e)}, 
+            status_code=503
+        )
 
-@app.route('/api/health', methods=['GET'])
-def health():
+@app.get("/api/health")
+async def health():
     """Verify backend health and check connections."""
     ollama_status = "offline"
     available_models = []
@@ -199,7 +213,7 @@ def health():
         
     kb_loaded = len(retriever.documents) > 0
     
-    return jsonify({
+    return {
         "status": "healthy",
         "database_loaded": kb_loaded,
         "database_records": len(retriever.documents),
@@ -208,8 +222,41 @@ def health():
         "ollama_model": OLLAMA_MODEL,
         "ollama_model_available": OLLAMA_MODEL in available_models or f"{OLLAMA_MODEL}:latest" in available_models,
         "available_models": available_models
-    })
+    }
+
+def cli_mode(question, retrieve_only=False):
+    """CLI mode for debugging without running the web server."""
+    print(f"==========================================")
+    print(f"🤖 StrokeGuard CLI Mode")
+    print(f"==========================================")
+    print(f"Câu hỏi: {question}\n")
+    
+    docs = retriever.search(question, top_k=4)
+    
+    if retrieve_only:
+        print("--- KẾT QUẢ TÌM KIẾM (RETRIEVE ONLY) ---")
+        if not docs:
+            print("Không tìm thấy tài liệu phù hợp.")
+            return
+            
+        for i, doc in enumerate(docs):
+            print(f"[{i+1}] {doc['title']} - {doc['section_title']}")
+            print(f"Nguồn: {doc['source']}")
+            print(f"Trích dẫn: {doc['content'][:300]}...\n")
+        return
+        
+    print("... Chế độ gọi LLM qua CLI chưa được triển khai đầy đủ. Hãy dùng --retrieve-only để test RAG.")
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5080))
-    app.run(host="0.0.0.0", port=port, debug=True)
+    parser = argparse.ArgumentParser(description="StrokeGuard AI Backend (FastAPI)")
+    parser.add_argument("--retrieve-only", action="store_true", help="Only retrieve chunks, don't use LLM")
+    parser.add_argument("--question", type=str, help="Question to ask in CLI mode")
+    
+    args, unknown = parser.parse_known_args()
+    
+    if args.question:
+        cli_mode(args.question, args.retrieve_only)
+    else:
+        import uvicorn
+        port = int(os.environ.get("PORT", 5080))
+        uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)

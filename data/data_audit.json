@@ -1,0 +1,20 @@
+[
+    {
+        "source_name": "Bệnh viện Tâm Anh",
+        "url": "https://tamanhhospital.vn/dot-quy/",
+        "chunks_count": 20,
+        "status": "Active",
+        "version": "Mới nhất",
+        "last_audited": "2026-06-16",
+        "notes": "Phác đồ/Tài liệu đang có hiệu lực. Hệ thống chỉ RAG trên tài liệu Active."
+    },
+    {
+        "source_name": "Vinmec",
+        "url": "https://www.vinmec.com/vie/bai-viet/dot-quy-nguyen-nhan-dau-hieu-nhan-biet-cach-phong-tranh-vi",
+        "chunks_count": 23,
+        "status": "Active",
+        "version": "Mới nhất",
+        "last_audited": "2026-06-16",
+        "notes": "Phác đồ/Tài liệu đang có hiệu lực. Hệ thống chỉ RAG trên tài liệu Active."
+    }
+]

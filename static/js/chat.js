@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatForm = document.getElementById("chat-form");
     const chatInput = document.getElementById("chat-input");
     const chatMessages = document.getElementById("chat-messages");
+    const stopBtn = document.getElementById("stop-btn");
+    const sendBtn = document.getElementById("send-btn");
     const statusDot = document.getElementById("status-dot");
     const statusText = document.getElementById("status-text");
     const modelBadge = document.getElementById("model-badge");
@@ -36,12 +38,24 @@ document.addEventListener("DOMContentLoaded", () => {
     loadAllSources();
     setupEventListeners();
 
+    let isGenerating = false;
+    let abortController = null;
+
     // Event Listeners Setup
     function setupEventListeners() {
         // Close Emergency Banner
         if (closeBannerBtn && emergencyBanner) {
             closeBannerBtn.addEventListener("click", () => {
                 emergencyBanner.classList.add("hidden");
+            });
+        }
+
+        // Stop generation button
+        if (stopBtn) {
+            stopBtn.addEventListener("click", () => {
+                if (abortController) {
+                    abortController.abort();
+                }
             });
         }
 
@@ -52,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Prompt Suggestions
         promptBtns.forEach(btn => {
             btn.addEventListener("click", () => {
+                if (isGenerating) return; // Prevent clicking while generating
                 const promptText = btn.getAttribute("data-prompt");
                 chatInput.value = promptText;
                 chatForm.dispatchEvent(new Event("submit"));
@@ -61,11 +76,21 @@ document.addEventListener("DOMContentLoaded", () => {
         // Chat Form Submission
         chatForm.addEventListener("submit", async (e) => {
             e.preventDefault();
+            if (isGenerating) return;
+            
             const query = chatInput.value.trim();
             if (!query) return;
 
-            // Clear input
+            isGenerating = true;
+
+            // Clear input and disable to prevent spamming
             chatInput.value = "";
+            chatInput.disabled = true;
+            if (sendBtn) {
+                sendBtn.disabled = true;
+                sendBtn.classList.add("hidden");
+            }
+            if (stopBtn) stopBtn.classList.remove("hidden");
 
             // Add user message to UI & history
             appendMessage("user", query);
@@ -75,13 +100,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const typingIndicator = showTypingIndicator();
 
             try {
+                abortController = new AbortController();
                 const response = await fetch("/api/chat", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ 
                         messages: conversationHistory,
                         stream: true
-                    })
+                    }),
+                    signal: abortController.signal
                 });
 
                 if (!response.ok) {
@@ -147,8 +174,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
             } catch (err) {
                 typingIndicator.remove();
-                appendMessage("assistant", `⚠️ **Lỗi kết nối:** Không thể kết nối tới máy chủ Flask. Vui lòng kiểm tra xem server đã được khởi chạy chưa.`);
-                console.error(err);
+                if (err.name === 'AbortError') {
+                    appendMessage("assistant", `*(Bạn đã ngừng tạo phản hồi)*`);
+                } else {
+                    appendMessage("assistant", `⚠️ **Lỗi kết nối:** Không thể kết nối tới máy chủ. Vui lòng kiểm tra xem server đã được khởi chạy chưa.`);
+                    console.error(err);
+                }
+            } finally {
+                // Re-enable input
+                isGenerating = false;
+                abortController = null;
+                chatInput.disabled = false;
+                if (sendBtn) {
+                    sendBtn.disabled = false;
+                    sendBtn.classList.remove("hidden");
+                }
+                if (stopBtn) stopBtn.classList.add("hidden");
+                chatInput.focus();
             }
         });
 

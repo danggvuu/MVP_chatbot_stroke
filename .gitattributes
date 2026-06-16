@@ -1,0 +1,7 @@
+# Đánh dấu các file Python là ngôn ngữ chính
+*.py linguist-detectable=true
+
+# Bỏ qua không đếm code HTML, CSS, JS để Github không nhận diện nhầm
+*.html linguist-detectable=false
+*.css linguist-detectable=false
+*.js linguist-detectable=false

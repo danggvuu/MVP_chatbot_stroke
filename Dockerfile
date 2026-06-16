@@ -31,4 +31,4 @@ RUN python scraper.py
 EXPOSE 5000
 
 # Run Flask using Gunicorn for production-ready container hosting
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "--timeout", "120", "app:app"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5080"]
