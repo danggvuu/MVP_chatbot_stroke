@@ -23,9 +23,17 @@ OLLAMA_API_URL = os.environ.get("OLLAMA_API_URL", "http://localhost:11434").rstr
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5:3b")
 KB_PATH = os.environ.get("KB_PATH", "data/knowledge_base.json")
 
-# Initialize retriever
-retriever = StrokeRetriever(kb_path=KB_PATH)
+# Initialize retriever lazily
+retriever = None
 
+def get_retriever():
+    global retriever
+    if retriever is None:
+        import time
+        t0 = time.time()
+        retriever = StrokeRetriever(kb_path=KB_PATH)
+        print(f"Retriever initialized in {time.time()-t0:.2f}s")
+    return retriever
 SYSTEM_PROMPT = """Bạn là trợ lý ảo hỗ trợ tra cứu Hướng dẫn Sơ cứu Đột quỵ của Bộ Y tế. Nhiệm vụ của bạn là trả lời CỰC KỲ NGẮN GỌN, ĐI THẲNG VÀO TRỌNG TÂM câu hỏi và TUÂN THỦ các chỉ dẫn an toàn sau:
 
 [QUY TẮC CỐT LÕI (GIẢM LAN MAN & TẬP TRUNG)]
@@ -55,11 +63,12 @@ async def index(request: Request):
 @app.get("/api/sources")
 async def get_sources():
     """Returns a list of all documents indexed in the database."""
-    if not retriever.documents:
-        retriever.load_database()
+    r = get_retriever()
+    if not r.documents:
+        r.load_database()
     
     sources_summary = []
-    for doc in retriever.documents:
+    for doc in r.documents:
         sources_summary.append({
             "id": doc["id"],
             "source": doc["source"],
@@ -79,7 +88,8 @@ async def retrieve_only(request: Request):
     if not query:
         return JSONResponse(content={"error": "No question provided"}, status_code=400)
         
-    retrieved_docs = retriever.search(query, top_k=top_k)
+    r = get_retriever()
+    retrieved_docs = r.search(query, top_k=top_k)
     return {"question": query, "chunks": retrieved_docs}
 
 @app.post("/api/chat")
@@ -97,7 +107,8 @@ async def chat(request: Request):
             last_user_msg = msg.get("content", "")
             break
             
-    retrieved_docs = retriever.search(last_user_msg, top_k=4)
+    r = get_retriever()
+    retrieved_docs = r.search(last_user_msg, top_k=4)
     
     context_str = ""
     sources_metadata = []
@@ -211,14 +222,15 @@ async def health():
     except Exception:
         pass
         
-    kb_loaded = len(retriever.documents) > 0
+    r = get_retriever()
+    kb_loaded = len(r.documents) > 0
     
     return {
         "status": "healthy",
         "database_loaded": kb_loaded,
-        "database_records": len(retriever.documents),
-        "retrieval_mode": "hybrid (BM25 + Qdrant)" if retriever.use_vector else "BM25 only",
-        "embedding_device": retriever.device,
+        "database_records": len(r.documents),
+        "retrieval_mode": "hybrid (BM25 + Qdrant)" if r.use_vector else "BM25 only",
+        "embedding_device": r.device,
         "ollama_connection": ollama_status,
         "ollama_url": OLLAMA_API_URL,
         "ollama_model": OLLAMA_MODEL,
@@ -233,7 +245,8 @@ def cli_mode(question, retrieve_only=False):
     print(f"==========================================")
     print(f"Câu hỏi: {question}\n")
     
-    docs = retriever.search(question, top_k=4)
+    r = get_retriever()
+    docs = r.search(question, top_k=4)
     
     if retrieve_only:
         print("--- KẾT QUẢ TÌM KIẾM (RETRIEVE ONLY) ---")

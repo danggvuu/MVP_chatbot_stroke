@@ -13,6 +13,9 @@ import re
 import platform
 import logging
 from collections import Counter
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from underthesea import word_tokenize
 
