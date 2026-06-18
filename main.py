@@ -20,7 +20,7 @@ templates = Jinja2Templates(directory="templates")
 
 # Configuration from environment variables
 OLLAMA_API_URL = os.environ.get("OLLAMA_API_URL", "http://localhost:11434").rstrip('/')
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.2")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5:3b")
 KB_PATH = os.environ.get("KB_PATH", "data/knowledge_base.json")
 
 # Initialize retriever
@@ -217,6 +217,8 @@ async def health():
         "status": "healthy",
         "database_loaded": kb_loaded,
         "database_records": len(retriever.documents),
+        "retrieval_mode": "hybrid (BM25 + Qdrant)" if retriever.use_vector else "BM25 only",
+        "embedding_device": retriever.device,
         "ollama_connection": ollama_status,
         "ollama_url": OLLAMA_API_URL,
         "ollama_model": OLLAMA_MODEL,

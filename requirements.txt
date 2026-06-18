@@ -7,3 +7,9 @@ underthesea==9.5.0
 jinja2==3.1.4
 python-dotenv==1.2.0
 python-multipart==0.0.9
+
+# --- Hybrid Search & GPU Acceleration ---
+qdrant-client>=1.7.0
+sentence-transformers>=2.2.2
+torch>=2.0.0
+numpy>=1.24.0

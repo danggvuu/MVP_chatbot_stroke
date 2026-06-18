@@ -37,3 +37,6 @@ env/
 .vscode/
 *.swp
 *.swo
+
+# Qdrant Local Database (generated binary)
+data/qdrant_db/

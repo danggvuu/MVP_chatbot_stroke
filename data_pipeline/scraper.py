@@ -91,10 +91,36 @@ def scrape_url(url, source_name):
 
 def main():
     urls = [
+        # === Bệnh viện Tâm Anh ===
         {"url": "https://tamanhhospital.vn/dot-quy/", "source": "Bệnh viện Tâm Anh"},
+        {"url": "https://tamanhhospital.vn/tai-bien-mach-mau-nao/", "source": "Bệnh viện Tâm Anh"},
+        {"url": "https://tamanhhospital.vn/dot-quy-nhe/", "source": "Bệnh viện Tâm Anh"},
+        {"url": "https://tamanhhospital.vn/dot-quy-thieu-mau-cuc-bo/", "source": "Bệnh viện Tâm Anh"},
+        {"url": "https://tamanhhospital.vn/dot-quy-xuat-huyet-nao/", "source": "Bệnh viện Tâm Anh"},
+        {"url": "https://tamanhhospital.vn/phuc-hoi-chuc-nang-sau-dot-quy/", "source": "Bệnh viện Tâm Anh"},
+        {"url": "https://tamanhhospital.vn/phong-ngua-dot-quy/", "source": "Bệnh viện Tâm Anh"},
+        {"url": "https://tamanhhospital.vn/dot-quy-o-nguoi-tre/", "source": "Bệnh viện Tâm Anh"},
+        {"url": "https://tamanhhospital.vn/tang-huyet-ap/", "source": "Bệnh viện Tâm Anh"},
+        # === Vinmec ===
         {"url": "https://www.vinmec.com/vie/bai-viet/dot-quy-nguyen-nhan-dau-hieu-nhan-biet-cach-phong-tranh-vi", "source": "Vinmec"},
         {"url": "https://www.vinmec.com/vie/bai-viet/6-dau-hieu-nhan-biet-dot-quy-som-vi", "source": "Vinmec"},
-        {"url": "https://www.vinmec.com/vie/bai-viet/huong-dan-truc-quan-de-hieu-ve-dot-quy-vi", "source": "Vinmec"}
+        {"url": "https://www.vinmec.com/vie/bai-viet/huong-dan-truc-quan-de-hieu-ve-dot-quy-vi", "source": "Vinmec"},
+        {"url": "https://www.vinmec.com/vie/bai-viet/dot-quy-nao-co-chua-duoc-khong-vi", "source": "Vinmec"},
+        {"url": "https://www.vinmec.com/vie/bai-viet/dot-quy-xuat-huyet-nao-vi", "source": "Vinmec"},
+        {"url": "https://www.vinmec.com/vie/bai-viet/nhoi-mau-nao-la-gi-vi", "source": "Vinmec"},
+        {"url": "https://www.vinmec.com/vie/bai-viet/che-do-an-cho-nguoi-dot-quy-vi", "source": "Vinmec"},
+        {"url": "https://www.vinmec.com/vie/bai-viet/phuc-hoi-chuc-nang-sau-dot-quy-vi", "source": "Vinmec"},
+        # === Medlatec ===
+        {"url": "https://medlatec.vn/tin-tuc/dot-quy-nao-la-gi-nguyen-nhan-trieu-chung-cach-dieu-tri-s195-n18955", "source": "Medlatec"},
+        {"url": "https://medlatec.vn/tin-tuc/dot-quy-xuat-huyet-nao-s195-n20822", "source": "Medlatec"},
+        {"url": "https://medlatec.vn/tin-tuc/nhoi-mau-nao-s195-n18178", "source": "Medlatec"},
+        # === YouMed ===
+        {"url": "https://youmed.vn/tin-tuc/dot-quy-nao/", "source": "YouMed"},
+        {"url": "https://youmed.vn/tin-tuc/phuc-hoi-chuc-nang-sau-dot-quy/", "source": "YouMed"},
+        # === Hello Bacsi ===
+        {"url": "https://www.hellobacsi.com/benh-thuong-gap/dot-quy/dot-quy/", "source": "Hello Bacsi"},
+        {"url": "https://www.hellobacsi.com/benh-thuong-gap/dot-quy/phuc-hoi-chuc-nang-sau-dot-quy/", "source": "Hello Bacsi"},
+        {"url": "https://www.hellobacsi.com/benh-thuong-gap/dot-quy/phong-ngua-dot-quy/", "source": "Hello Bacsi"},
     ]
     
     all_chunks = []
