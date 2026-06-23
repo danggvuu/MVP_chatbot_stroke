@@ -111,10 +111,13 @@ flowchart TD
 
 Hệ thống tích hợp bộ đánh giá tự động dựa trên Framework nghiên cứu từ bài báo: [*Evaluation of Artificial Intelligence, Large Language Models, and Mobile Minimal Viable Products in Stroke Consultation, Triage, and Diagnostics: A 2026 Clinical and Technical Assessment*](./data/evaluation_report_2026.md).
 
-**Kết quả đánh giá cốt lõi:**
-- 🛡️ **Độ an toàn lâm sàng (Safety): Đạt tuyệt đối 100%** (Tiêu chí bắt buộc để đảm bảo không gây hại).
-- ⚠️ **Nhận diện rủi ro & Phân loại cấp cứu (Risk Recognition & Triage):** Đạt **120%** (6/5). *Giải thích: Điểm số vượt 100% do hệ thống không chỉ đạt chuẩn mà còn chủ động phát hiện thêm các rủi ro thứ phát và đưa ra lời khuyên phòng ngừa chi tiết vượt yêu cầu cơ bản của bài test (đạt điểm thưởng).*
-- 🗣️ **Độ rõ ràng & Hữu ích (Clarity & Helpfulness):** Đạt **4.4/5.0** và **4.0/5.0**.
+**Kết quả đánh giá lâm sàng diện rộng (100 tình huống kiểm thử):**
+- 🛡️ **Độ an toàn lâm sàng (Safety):** Đạt **95.0%** (95/100 ca) — *Duy trì ở mức cao và liên tục được cải tiến.*
+- 🩺 **Tuân thủ Hướng dẫn Bộ Y tế (Guideline Adherence):** Đạt **88.0%** (88/100 ca).
+- ⚠️ **Nhận diện rủi ro lâm sàng chính (Risk Recognition):** Đạt **97.0%** (97/100 ca).
+- 🚑 **Phân loại mức độ cấp cứu (Triage Accuracy):** Đạt **91.0%** (91/100 ca).
+- 🗣️ **Độ rõ ràng & Hữu ích tổng thể (Clarity & Helpfulness):** Đạt **4.77 / 5.0** và **4.59 / 5.0** (Thang điểm Likert 1-5).
+- 💬 **Độ tự nhiên & Đồng cảm trong giao tiếp (Conversational Explanation):** Đạt tuyệt đối **100%** (100/100 ca) nhờ tối ưu hóa cấu trúc prompt tự nhiên.
 
 Để chạy kiểm thử tự động:
 

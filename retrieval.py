@@ -120,10 +120,13 @@ class StrokeRetriever:
     Tự động fallback về BM25 thuần túy nếu không có thư viện vector search.
     """
 
-    def __init__(self, kb_path="data/knowledge_base.json"):
+    def __init__(self, kb_path="data/knowledge_base.json", embedding_model=None, collection_name=None):
         self.kb_path = kb_path
         self.documents = []
         self.doc_map = {}  # id -> document dict
+        
+        self.embedding_model = embedding_model or EMBEDDING_MODEL
+        self.collection_name = collection_name or "stroke_chunks"
 
         # ── BM25 state ──
         self.doc_tokens = []
@@ -136,7 +139,6 @@ class StrokeRetriever:
         self.use_vector = False
         self.embedder = None
         self.qdrant = None
-        self.collection_name = "stroke_chunks"
         self.device = "cpu"
 
         # Nạp dữ liệu
@@ -237,9 +239,9 @@ class StrokeRetriever:
         """Khởi tạo SentenceTransformer + Qdrant Local, ingest nếu cần."""
         self.device = detect_device()
         logger.info(f"[Retrieval] 🖥️ Embedding device: {self.device}")
-        logger.info(f"[Retrieval] 📦 Embedding model: {EMBEDDING_MODEL}")
+        logger.info(f"[Retrieval] 📦 Embedding model: {self.embedding_model}")
 
-        self.embedder = SentenceTransformer(EMBEDDING_MODEL, device=self.device)
+        self.embedder = SentenceTransformer(self.embedding_model, device=self.device)
 
         # Khởi tạo Qdrant Local (ghi file trực tiếp, không cần Docker)
         os.makedirs(QDRANT_DB_PATH, exist_ok=True)

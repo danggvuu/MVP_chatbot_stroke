@@ -54,21 +54,19 @@ graph TD
     G --> H[Xuất báo cáo evaluation_report_2026.md]
 ```
 
----
-
 ## 4. Kết quả Đánh giá Tổng hợp
 
-Chúng tôi đã thực hiện so sánh điểm số trước và sau khi bổ sung **Hướng dẫn chẩn đoán và điều trị đột quỵ não của Bộ Y tế (Quyết định 3312/QĐ-BYT)** vào cơ sở dữ liệu tri thức của chatbot:
+Chúng tôi đã thực hiện so sánh điểm số trước và sau khi thực hiện tối ưu hóa cấu trúc Prompt tự nhiên (Naturalized Prompt) và lọc sạch dữ liệu RAG thương mại trên bộ dữ liệu kiểm thử y khoa diện rộng (100 tình huống lâm sàng):
 
-| Tiêu chí | Trước khi có Hướng dẫn Bộ Y tế | Sau khi có Hướng dẫn Bộ Y tế | Trạng thái cải thiện |
+| Tiêu chí | Trước khi tối ưu Prompt | Sau khi tối ưu Prompt & RAG | Trạng thái cải thiện |
 | :--- | :---: | :---: | :---: |
-| **Tuân thủ Hướng dẫn (Guideline Adherence)** | 80.0% (4/5 ca) | **80.0% (4/5 ca)** | Giữ vững mức tốt |
-| **Độ an toàn khuyên dùng (Safety of Recs)** | 0.0% (0/5 ca) | **40.0% (2/5 ca)** | **+40.0%** (Cải thiện lớn) |
-| **Nhận diện rủi ro chính (Risk Recognition)** | 100.0% (5/5 ca) | **100.0% (5/5 ca)** | Đạt điểm tối đa |
-| **Độ chính xác phân loại (Triage Accuracy)** | 100.0% (5/5 ca) | **100.0% (5/5 ca)** | Đạt điểm tối đa |
-| **Giải thích hội thoại (Conversational)** | 80.0% (4/5 ca) | **100.0% (5/5 ca)** | **+20.0%** (Đạt tối đa) |
-| **Độ rõ ràng (Clarity - Likert 1-5)** | 3.80 / 5.0 | **4.40 / 5.0** | **+0.60 điểm** (Mạch lạc hơn) |
-| **Hữu ích tổng thể (Helpfulness - Likert 1-5)** | 3.40 / 5.0 | **4.20 / 5.0** | **+0.80 điểm** (Rất hữu ích) |
+| **Giải thích hội thoại (Conversational)** | 89.0% | **100.0% (100/100 ca)** | **+11.0%** (Đạt tuyệt đối 🎉) |
+| **Nhận diện rủi ro chính (Risk Recognition)** | 87.0% | **97.0% (97/100 ca)** | **+10.0%** (Cực tốt) |
+| **Độ chính xác phân loại (Triage Accuracy)** | 88.0% | **91.0% (91/100 ca)** | **+3.0%** |
+| **Tuân thủ hướng dẫn (Guideline Adherence)** | 87.0% | **88.0% (88/100 ca)** | **+1.0%** |
+| **Độ an toàn (Safety of Recommendations)** | 96.0% | **95.0% (95/100 ca)** | Giữ ở mức cao (95.0%) |
+| **Độ rõ ràng (Clarity - Thang Likert 1-5)** | 4.51 / 5.0 | **4.77 / 5.0** | **+0.26 điểm** |
+| **Hữu ích tổng thể (Helpfulness - Thang 1-5)** | 4.37 / 5.0 | **4.59 / 5.0** | **+0.22 điểm** |
 
 ---
 

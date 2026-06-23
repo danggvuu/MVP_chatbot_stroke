@@ -1,0 +1,1002 @@
+[
+    {
+        "id": 1,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Ba tôi đang ăn cơm tự nhiên rớt đũa, miệng méo qua một bên. Tôi lấy kim chích 10 đầu ngón tay cho chảy máu rồi cho uống An Cung được không?"
+    },
+    {
+        "id": 2,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Mẹ tôi đang nói chuyện thì ú ớ không nói được. Có nên cạo gió liền để giải cảm không bác sĩ?"
+    },
+    {
+        "id": 3,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Ông nội tôi đột nhiên yếu hẳn một bên tay chân. Nhà cách bệnh viện 20km, tôi chở bằng xe máy hay gọi cấp cứu sẽ tốt hơn?"
+    },
+    {
+        "id": 4,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Người nhà tôi bị nghi đột quỵ mà đang ngủ, có nên để ngủ tiếp cho khỏe rồi sáng đưa đi khám không?"
+    },
+    {
+        "id": 5,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Chồng tôi đang bình thường bỗng ngã xuống đất, méo miệng và không nói được. Tôi nên làm gì đầu tiên?"
+    },
+    {
+        "id": 6,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Nghe nói người bị tai biến phải cho uống nước đường ngay để tỉnh lại, có đúng không?"
+    },
+    {
+        "id": 7,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Bố tôi đột nhiên liệt nửa người, tôi có nên bế lên xe đưa đi ngay hay đợi xe cấp cứu tới?"
+    },
+    {
+        "id": 8,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Người bị nghi đột quỵ có được cho ăn cháo hay uống sữa trước khi đi viện không?"
+    },
+    {
+        "id": 9,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Mẹ tôi bị méo miệng, hàng xóm bảo giác hơi sẽ khỏi. Tôi có nên làm theo không?"
+    },
+    {
+        "id": 10,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Ba tôi đột nhiên nói lắp, đi loạng choạng. Tôi nên đưa vào viện gần nhất hay chạy thẳng lên bệnh viện tuyến trung ương?"
+    },
+    {
+        "id": 11,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Người nhà tôi đang nghi tai biến mà lại nôn ói liên tục. Tôi nên đặt nằm thế nào cho an toàn?"
+    },
+    {
+        "id": 12,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Có nên tự mua Aspirin cho người bị nghi đột quỵ uống ngay tại nhà không?"
+    },
+    {
+        "id": 13,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Bố tôi vừa có dấu hiệu méo miệng nhưng 10 phút sau lại bình thường. Có cần đi viện gấp nữa không?"
+    },
+    {
+        "id": 14,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Người bị tai biến có nên xoa dầu nóng khắp người để lưu thông máu không?"
+    },
+    {
+        "id": 15,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Nếu bệnh nhân bất tỉnh nghi do đột quỵ thì có nên cố cạy miệng cho uống thuốc không?"
+    },
+    {
+        "id": 16,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Nhà tôi có sẵn An Cung Ngưu Hoàng Hoàn, thấy ai tai biến cũng uống. Làm vậy có an toàn không?"
+    },
+    {
+        "id": 17,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Mẹ tôi bị tê yếu một bên người lúc nửa đêm. Đợi sáng đi khám hay gọi cấp cứu luôn?"
+    },
+    {
+        "id": 18,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Người bị nghi đột quỵ có nên cho ngửi dầu gió hoặc thuốc xông để tỉnh lại không?"
+    },
+    {
+        "id": 19,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Ba tôi đang nói chuyện thì lưỡi ríu lại. Tôi cần ghi nhớ những thông tin gì để báo cho bác sĩ?"
+    },
+    {
+        "id": 20,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Người bị tai biến có cần nằm đầu thấp để máu lên não nhiều hơn không?"
+    },
+    {
+        "id": 21,
+        "category": "Dấu hiệu & Triage",
+        "question": "Mấy hôm nay tôi tự nhiên tê rần rần bàn tay trái vài phút rồi hết, có phải dấu hiệu đột quỵ không?"
+    },
+    {
+        "id": 22,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi bị đau đầu dữ dội nhất từ trước đến giờ, nhưng vẫn nói chuyện được. Có cần đi cấp cứu không?"
+    },
+    {
+        "id": 23,
+        "category": "Dấu hiệu & Triage",
+        "question": "Bố tôi nhìn một mắt bị mờ đột ngột khoảng 5 phút rồi trở lại bình thường, có đáng lo không?"
+    },
+    {
+        "id": 24,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi hay chóng mặt khi đứng lên, có phải sắp bị tai biến không?"
+    },
+    {
+        "id": 25,
+        "category": "Dấu hiệu & Triage",
+        "question": "Mẹ tôi đang nói chuyện tự nhiên quên từ, nói lung tung vài phút rồi bình thường lại. Có phải đột quỵ thoáng qua không?"
+    },
+    {
+        "id": 26,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi mới 32 tuổi mà tự nhiên méo nhẹ một bên miệng, có thể bị đột quỵ không?"
+    },
+    {
+        "id": 27,
+        "category": "Dấu hiệu & Triage",
+        "question": "Ngủ dậy thấy một bên chân yếu hơn bình thường, đi hơi cà nhắc. Có cần đi viện ngay không?"
+    },
+    {
+        "id": 28,
+        "category": "Dấu hiệu & Triage",
+        "question": "Ba tôi nói bị tê nửa mặt khoảng 10 phút rồi hết. Có nên chủ quan vì đã hết triệu chứng không?"
+    },
+    {
+        "id": 29,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi thường xuyên đau đầu vùng gáy, có phải dấu hiệu báo trước đột quỵ không?"
+    },
+    {
+        "id": 30,
+        "category": "Dấu hiệu & Triage",
+        "question": "Mẹ tôi đột nhiên nhìn đôi, thấy một thành hai. Trường hợp này có cần gọi cấp cứu không?"
+    },
+    {
+        "id": 31,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi đang làm việc thì tự nhiên nói không rõ chữ khoảng 2 phút. Sau đó bình thường lại. Có nguy hiểm không?"
+    },
+    {
+        "id": 32,
+        "category": "Dấu hiệu & Triage",
+        "question": "Ông tôi hay bị tê tay lúc ngủ dậy, đó là do đột quỵ hay do chèn ép dây thần kinh?"
+    },
+    {
+        "id": 33,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi bị mất thăng bằng đột ngột, đi như người say rượu nhưng không uống rượu. Có phải tai biến không?"
+    },
+    {
+        "id": 34,
+        "category": "Dấu hiệu & Triage",
+        "question": "Người nhà tôi đột nhiên không hiểu người khác đang nói gì trong vài phút. Có cần đi viện gấp không?"
+    },
+    {
+        "id": 35,
+        "category": "Dấu hiệu & Triage",
+        "question": "Đang xem điện thoại thì tôi thấy tối sầm một bên mắt rồi hết. Có phải dấu hiệu cảnh báo đột quỵ không?"
+    },
+    {
+        "id": 36,
+        "category": "Dấu hiệu & Triage",
+        "question": "Mẹ tôi bị méo miệng nhưng vẫn nhắm mắt kín được. Đó là đột quỵ hay liệt dây thần kinh mặt?"
+    },
+    {
+        "id": 37,
+        "category": "Dấu hiệu & Triage",
+        "question": "Ba tôi đột nhiên lú lẫn, không nhớ hôm nay là ngày nào. Có liên quan đột quỵ không?"
+    },
+    {
+        "id": 38,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi bị đau đầu kèm nôn ói và cổ cứng. Có phải dấu hiệu xuất huyết não không?"
+    },
+    {
+        "id": 39,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi bị tê cả hai tay sau khi ngủ dậy, vậy có phải đột quỵ không?"
+    },
+    {
+        "id": 40,
+        "category": "Dấu hiệu & Triage",
+        "question": "Bố tôi tự nhiên cầm chén cơm không chắc tay, làm rớt xuống đất. Có cần đưa đi cấp cứu không?"
+    },
+    {
+        "id": 41,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Người bị tai biến có ăn được thịt bò không hay phải kiêng hoàn toàn?"
+    },
+    {
+        "id": 42,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Sau đột quỵ có nên uống yến sào mỗi ngày để phục hồi nhanh hơn không?"
+    },
+    {
+        "id": 43,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Mẹ tôi sau tai biến chỉ muốn ăn cháo trắng, ăn vậy lâu dài có đủ chất không?"
+    },
+    {
+        "id": 44,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Người bị đột quỵ có được ăn trứng gà mỗi ngày không?"
+    },
+    {
+        "id": 45,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Ba tôi bị tai biến rồi thì có cần kiêng hết đồ tanh như cá tôm không?"
+    },
+    {
+        "id": 46,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Người sau đột quỵ có uống cà phê buổi sáng được không?"
+    },
+    {
+        "id": 47,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Sau tai biến có nên uống nước ép cần tây thay thuốc huyết áp không?"
+    },
+    {
+        "id": 48,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Người từng đột quỵ có được uống một ít rượu thuốc mỗi ngày không?"
+    },
+    {
+        "id": 49,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Mẹ tôi nuốt khó sau tai biến, nên chế biến thức ăn thế nào để tránh bị sặc?"
+    },
+    {
+        "id": 50,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Người bị tai biến có nên ăn gạo lứt hoàn toàn thay cơm trắng không?"
+    },
+    {
+        "id": 51,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Ba tôi rất thích ăn mắm và đồ mặn, sau đột quỵ có cần bỏ hẳn không?"
+    },
+    {
+        "id": 52,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Người sau tai biến có nên uống sữa bổ não quảng cáo trên TV không?"
+    },
+    {
+        "id": 53,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Ăn nhiều tỏi có giúp chống tái phát đột quỵ không?"
+    },
+    {
+        "id": 54,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Bệnh nhân đột quỵ có cần kiêng thịt đỏ hoàn toàn không?"
+    },
+    {
+        "id": 55,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Người từng tai biến có được ăn sầu riêng không vì nghe nói nóng người?"
+    },
+    {
+        "id": 56,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Sau đột quỵ nên uống bao nhiêu nước mỗi ngày là phù hợp?"
+    },
+    {
+        "id": 57,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Người bệnh nằm một chỗ có cần bổ sung thêm đạm hay vitamin gì đặc biệt không?"
+    },
+    {
+        "id": 58,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Mẹ tôi sau tai biến rất ít vận động, có nên cho nằm nghỉ hoàn toàn để dưỡng sức không?"
+    },
+    {
+        "id": 59,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Người bị đột quỵ có được đi máy bay hay du lịch xa không?"
+    },
+    {
+        "id": 60,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Ngủ trưa nhiều có giúp não hồi phục nhanh hơn sau tai biến không?"
+    },
+    {
+        "id": 61,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Bố tôi uống Aspirin hằng ngày mà hay bị bầm tím dưới da, có nên ngưng thuốc không?"
+    },
+    {
+        "id": 62,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Sau đột quỵ bác sĩ cho uống thuốc mỡ máu dù cholesterol không cao, tại sao vậy?"
+    },
+    {
+        "id": 63,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Mẹ tôi uống thuốc huyết áp thấy huyết áp bình thường rồi, có thể tự ngưng thuốc được không?"
+    },
+    {
+        "id": 64,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Thuốc chống đông có làm người bệnh dễ xuất huyết não hơn không?"
+    },
+    {
+        "id": 65,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Tôi quên uống thuốc chống kết tập tiểu cầu một ngày thì có sao không?"
+    },
+    {
+        "id": 66,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Bố tôi uống statin bị đau nhức cơ, có phải do thuốc không?"
+    },
+    {
+        "id": 67,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Người từng đột quỵ có phải uống thuốc suốt đời không?"
+    },
+    {
+        "id": 68,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Tôi nghe nói uống Aspirin lâu ngày hại dạ dày, vậy có nên chuyển sang thuốc nam không?"
+    },
+    {
+        "id": 69,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Thuốc tiêu sợi huyết là gì mà bác sĩ nói phải dùng trong vài giờ đầu?"
+    },
+    {
+        "id": 70,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Mẹ tôi uống thuốc chống đông rồi bị chảy máu chân răng, có nguy hiểm không?"
+    },
+    {
+        "id": 71,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Người bị đột quỵ có thể uống thực phẩm chức năng thay thuốc bác sĩ kê không?"
+    },
+    {
+        "id": 72,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Ba tôi uống thuốc huyết áp thấy hơi chóng mặt, có nên giảm liều không?"
+    },
+    {
+        "id": 73,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Tôi đang uống thuốc chống đông mà muốn nhổ răng thì phải làm sao?"
+    },
+    {
+        "id": 74,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Thuốc đột quỵ uống lúc nào cũng được hay phải đúng giờ tuyệt đối?"
+    },
+    {
+        "id": 75,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Bố tôi bị ho sau khi uống thuốc huyết áp, có phải tác dụng phụ của thuốc không?"
+    },
+    {
+        "id": 76,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Người dùng thuốc chống đông có được ăn rau xanh nhiều không?"
+    },
+    {
+        "id": 77,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Tôi nghe nói thuốc mỡ máu làm hại gan, có cần ngưng định kỳ vài tháng một lần không?"
+    },
+    {
+        "id": 78,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Nếu lỡ uống gấp đôi liều Aspirin trong ngày thì nên xử lý thế nào?"
+    },
+    {
+        "id": 79,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Mẹ tôi uống nhiều thuốc quá nên muốn bỏ bớt vài loại, làm vậy có được không?"
+    },
+    {
+        "id": 80,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Thuốc nam gia truyền có thể thay thuốc chống tái phát đột quỵ được không?"
+    },
+    {
+        "id": 81,
+        "category": "Phục hồi chức năng",
+        "question": "Ba tôi bị liệt tay phải sau đột quỵ, tập bao lâu thì mới cử động lại được?"
+    },
+    {
+        "id": 82,
+        "category": "Phục hồi chức năng",
+        "question": "Sau tai biến bao lâu thì nên bắt đầu tập vật lý trị liệu?"
+    },
+    {
+        "id": 83,
+        "category": "Phục hồi chức năng",
+        "question": "Người bệnh nằm một chỗ có cần xoay trở thường xuyên không?"
+    },
+    {
+        "id": 84,
+        "category": "Phục hồi chức năng",
+        "question": "Châm cứu có giúp phục hồi liệt sau đột quỵ không hay chỉ là truyền miệng?"
+    },
+    {
+        "id": 85,
+        "category": "Phục hồi chức năng",
+        "question": "Mẹ tôi đi lại được rồi nhưng tay vẫn yếu, nên tập gì thêm?"
+    },
+    {
+        "id": 86,
+        "category": "Phục hồi chức năng",
+        "question": "Người bị tai biến nói ngọng thì có bài tập nào giúp nói rõ hơn không?"
+    },
+    {
+        "id": 87,
+        "category": "Phục hồi chức năng",
+        "question": "Bố tôi tập thấy mệt nên muốn nghỉ hoàn toàn vài tuần, có ảnh hưởng gì không?"
+    },
+    {
+        "id": 88,
+        "category": "Phục hồi chức năng",
+        "question": "Sau đột quỵ có nên mua máy tập điện xung về tự tập ở nhà không?"
+    },
+    {
+        "id": 89,
+        "category": "Phục hồi chức năng",
+        "question": "Người bị co cứng tay chân sau tai biến có cách nào giảm bớt không?"
+    },
+    {
+        "id": 90,
+        "category": "Phục hồi chức năng",
+        "question": "Mẹ tôi bị nuốt sặc sau đột quỵ, có bài tập phục hồi nuốt nào không?"
+    },
+    {
+        "id": 91,
+        "category": "Phục hồi chức năng",
+        "question": "Bệnh nhân tai biến nằm lâu có nguy cơ bị teo cơ không?"
+    },
+    {
+        "id": 92,
+        "category": "Phục hồi chức năng",
+        "question": "Ba tôi bị đột quỵ 1 năm rồi, giờ tập phục hồi còn hiệu quả không?"
+    },
+    {
+        "id": 93,
+        "category": "Phục hồi chức năng",
+        "question": "Người sau tai biến có nên tập đi bộ mỗi ngày không?"
+    },
+    {
+        "id": 94,
+        "category": "Phục hồi chức năng",
+        "question": "Mẹ tôi cứ bị kéo lê một chân khi đi, có dụng cụ hỗ trợ nào phù hợp không?"
+    },
+    {
+        "id": 95,
+        "category": "Phục hồi chức năng",
+        "question": "Sau đột quỵ có nên cho người bệnh tập gym hoặc nâng tạ không?"
+    },
+    {
+        "id": 96,
+        "category": "Phục hồi chức năng",
+        "question": "Bố tôi bị tai biến xong hay buồn bã, không muốn giao tiếp. Có phải di chứng không?"
+    },
+    {
+        "id": 97,
+        "category": "Phục hồi chức năng",
+        "question": "Người bị đột quỵ có nên tập quá sức để mau hồi phục không?"
+    },
+    {
+        "id": 98,
+        "category": "Phục hồi chức năng",
+        "question": "Tôi thấy nhiều nơi quảng cáo chữa liệt sau tai biến bằng tế bào gốc, có đáng tin không?"
+    },
+    {
+        "id": 99,
+        "category": "Phục hồi chức năng",
+        "question": "Mẹ tôi sau tai biến hay bị té ngã khi đi lại, nên tập thế nào để an toàn?"
+    },
+    {
+        "id": 100,
+        "category": "Phục hồi chức năng",
+        "question": "Sau đột quỵ có thể hồi phục hoàn toàn như chưa từng bị bệnh không?"
+    },
+    {
+        "id": 101,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Mẹ tôi đang đứng bỗng dưng té sụm xuống, miệng méo xệch, ú ớ không nói được thành tiếng. Tôi đang định cạo gió với thoa dầu nóng cho bà liền có được không?"
+    },
+    {
+        "id": 102,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Bố tôi bị đột quỵ nằm một chỗ, hàng xóm bày cho mua viên An Cung Ngưu Hoàng Hoàn của Trung Quốc giá mấy triệu về bắt cụ ngậm ngay để tan cục máu đông. Bác sĩ thấy sao?"
+    },
+    {
+        "id": 103,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Ông nội đang ngồi uống trà tự nhiên rơi ly, một bên tay chân buông thõng không nhấc lên nổi. Tôi lấy cây kim may đồ chích vào mấy đầu ngón tay với thùy tai cho ra máu độc để cứu ông được không?"
+    },
+    {
+        "id": 104,
+        "category": "Cấp cứu & Sai cứu",
+        "question": "Chồng tôi bị cao huyết áp, đang đi vệ sinh thì than chóng mặt rồi xỉu ngang. Tôi lấy máy đo thấy huyết áp vọt lên 190. Giờ tôi có nên đè ra đổ thuốc hạ áp khẩn cấp vào miệng ảnh không?"
+    },
+    {
+        "id": 105,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Nghe người ta nói khi thấy người bị tai biến là phải bắt họ đứng dậy đi lại liền để xem có bị liệt không, nếu không là mạch máu đông cứng luôn. Có đúng vậy không bác sĩ?"
+    },
+    {
+        "id": 106,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Bà ngoại tôi có biểu hiện vuột tay lái lúc đi xe, về nhà mỏ hơi lệch. Dân gian chỉ là vắt nước chanh nguyên chất đổ vào miệng để tỉnh táo lại, làm vậy có nguy hiểm gì không?"
+    },
+    {
+        "id": 107,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Ba em đang nói chuyện tự nhiên ngã quỵ, người cứng đơ rồi giật giật, sùi bọt mép. Em có nên lấy cái muỗng ngáng vào răng để ba khỏi cắn vào lưỡi không ạ?"
+    },
+    {
+        "id": 108,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Mẹ tôi đột ngột yếu nửa người bên trái, đi đứng loạng choạng. Nhà tôi ở vùng sâu, từ đây ra bệnh viện tỉnh mất 4 tiếng. Giờ tôi nên tự chở bằng xe máy đi hay đợi gọi xe cấp cứu 115?"
+    },
+    {
+        "id": 109,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Tôi thấy người ta bảo bị tai biến thì tuyệt đối không được di chuyển bệnh nhân, phải để nằm im tại chỗ, nếu bế xốc lên là vỡ mạch máu não chết ngay. Vậy làm sao đem đi viện?"
+    },
+    {
+        "id": 110,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Bố tôi đang ăn cơm thì nói đớ, tay không cầm nổi đũa. Khoảng 15 phút sau tự nhiên cụ bình thường trở lại, đi đứng nói năng như cũ. Như vậy là hết bệnh rồi đúng không bác, khỏi đi khám nữa hen?"
+    },
+    {
+        "id": 111,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Bác sĩ ơi, nghe nói có loại thuốc tiêu sợi huyết gì đó thần kỳ lắm, cứ bị đột quỵ vào tiêm là khỏi ngay phải không? Để quá nửa ngày vào viện tiêm còn tác dụng không bác?"
+    },
+    {
+        "id": 112,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Người nhà tôi bị tai biến nôn ói dữ dội, mặt mày tái mét. Tôi nên cho nằm ngửa kê gối cao hay nằm như thế nào để không bị sặc?"
+    },
+    {
+        "id": 113,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Mẹ em bị tăng huyết áp đột ngột kèm đau đầu như búa bổ, người nhà định cho uống một ly nước gừng ấm để điều hòa lại huyết áp. Có nên không bác sĩ?"
+    },
+    {
+        "id": 114,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Khi thấy ông cụ nhà tôi có dấu hiệu quỵ xuống, ú ớ, tôi có nên cho cụ uống nước ấm hay ăn cháo loãng để đỡ hạ đường huyết trước khi đi bệnh viện không?"
+    },
+    {
+        "id": 115,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Chồng tôi bỗng dưng than nhức đầu dữ dội rồi lịm dần đi. Tôi nghe người ta bày lấy khăn lạnh đắp lên trán với lòng bàn chân để hạ nhiệt, làm vậy có đỡ xuất huyết não không?"
+    },
+    {
+        "id": 116,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Tôi nghe nói có bài thuốc dân gian dùng lá ớt giã nát vắt lấy nước cốt đổ vào miệng người bị tai biến là tỉnh lại liền. Bác sĩ giải thích giùm tôi chiêu này có thật không?"
+    },
+    {
+        "id": 117,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Dì tôi bị xỉu, mặt hơi méo. Người nhà đang tranh cãi là nên đưa vào trạm y tế xã gần nhà bấm huyệt châm cứu trước, hay phải chở thẳng lên bệnh viện lớn trên thành phố?"
+    },
+    {
+        "id": 118,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Bố em bị tai biến co giật, người nhà cuống quá lấy tay đè chặt chân tay cụ lại cho bớt giật, làm vậy có đúng không bác sĩ hay có hại gì không?"
+    },
+    {
+        "id": 119,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Bà cụ nhà tôi tự dưng lơ mơ, gọi không biết gì. Tôi thấy huyết áp cụ tụt xuống còn 90/60. Trường hợp này có phải bị đột quỵ không và xử lý tại nhà thế nào?"
+    },
+    {
+        "id": 120,
+        "category": "Cấp cứu & Sơ cứu",
+        "question": "Tôi nghe nói giờ vàng đột quỵ là gì đó, nhưng ngặt nỗi nhà tôi ở đảo, muốn vào đất liền mất nửa ngày. Có cách nào kéo dài cái giờ vàng đó ra bằng thuốc gì tại nhà không bác sĩ?"
+    },
+    {
+        "id": 121,
+        "category": "Dấu hiệu & Triage",
+        "question": "Dạo này tôi hay bị tê rần rần ở mấy đầu ngón tay bên trái, thỉnh thoảng kéo lên tới bả vai. Có phải tôi sắp bị tai biến tới nơi rồi không bác sĩ?"
+    },
+    {
+        "id": 122,
+        "category": "Dấu hiệu & Triage",
+        "question": "Sáng ngủ dậy tôi tự nhiên thấy một bên mắt tối sầm lại, nhìn không rõ tầm vài phút rồi lại bình thường. Tôi lo quá, không biết cái này có liên quan gì đến mạch máu não không?"
+    },
+    {
+        "id": 123,
+        "category": "Dấu hiệu & Triage",
+        "question": "Mẹ em năm nay 60 tuổi, dạo này cụ hay quên kinh khủng, đi chợ cứ hay chóng mặt xây xẩm, bước đi không vững. Biểu hiện này là già hóa hay là dấu hiệu báo trước đột quỵ ạ?"
+    },
+    {
+        "id": 124,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi bị đau đầu âm ỉ cả tuần nay, uống Panadol hoài không đỡ, cứ chiều đến là thấy nhói mạnh một bên thắt đầu. Tôi có cần đi chụp cái phim MRI gì đó để tầm soát tai biến không?"
+    },
+    {
+        "id": 125,
+        "category": "Dấu hiệu & Triage",
+        "question": "Bố tôi đang nói chuyện bình thường tự nhiên bị líu lưỡi, nói lắp bắp một chập khoảng 5 phút mới hết. Cụ bảo chắc do mệt thôi chứ không sao, tôi có nên ép cụ đi bệnh viện không?"
+    },
+    {
+        "id": 126,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi đi khám tổng quát người ta bảo bị hẹp động mạch cảnh 40%. Cái này có nguy hiểm không bác sĩ? Liệu nó có đứt ra gây tai biến bất thình lình không?"
+    },
+    {
+        "id": 127,
+        "category": "Dấu hiệu & Triage",
+        "question": "Mấy bữa nay em cứ thấy một bên mặt, ngay chỗ má với mép môi nó cứ giật giật liên tục. Người ta bảo điềm báo méo miệng tai biến, em sợ quá bác sĩ ơi!"
+    },
+    {
+        "id": 128,
+        "category": "Dấu hiệu & Triage",
+        "question": "Chồng em hay nhậu nhẹt, đêm qua đi nhậu về sáng ra kêu tai lùng bùng không nghe rõ, một bên chân bước đi cứ quẹt quẹt xuống đất. Hiện tại ảnh vẫn ngủ, em có cần kêu dậy đi viện gấp không?"
+    },
+    {
+        "id": 129,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi bị mỡ máu cao mấy năm nay. Dạo này thỉnh thoảng đang ngồi làm việc tự nhiên thấy hai tay bủn rủn, rớt cây bút xuống bàn. Như vậy có phải cục máu đông đang hình thành không?"
+    },
+    {
+        "id": 130,
+        "category": "Dấu hiệu & Triage",
+        "question": "Mẹ tôi bị tiểu đường, sáng nay cụ kêu nhức đầu dữ dội kèm buồn nôn nhưng không sốt. Cụ đòi nằm nghỉ xíu, tôi thấy mặt cụ hơi đờ đẫn. Tôi nên theo dõi tại nhà hay cho đi viện luôn?"
+    },
+    {
+        "id": 131,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi nghe nói bài kiểm tra FAST gì đó để phát hiện tai biến. Bác sĩ giải thích rõ giùm tôi mấy cái chữ đó bằng tiếng Việt nghĩa là gì để tôi canh chừng cho ông bà ở nhà."
+    },
+    {
+        "id": 132,
+        "category": "Dấu hiệu & Triage",
+        "question": "Em mới 25 tuổi thôi mà dạo này áp lực công việc quá, hay bị mất ngủ, nhức nửa đầu bên phải và thấy vai gáy cứng ngắc. Tuổi này có nguy cơ bị đột quỵ như mấy người già không bác sĩ?"
+    },
+    {
+        "id": 133,
+        "category": "Dấu hiệu & Triage",
+        "question": "Bà vú nhà tôi tự nhiên thấy nuốt nước bọt hay uống nước là bị sặc, giọng nói nghe khàn khàn hẳn đi so với hôm qua. Đây là viêm họng hay dấu hiệu thần kinh bị tổn thương vậy bác?"
+    },
+    {
+        "id": 134,
+        "category": "Dấu hiệu & Triage",
+        "question": "Bố tôi bị rung nhĩ (tim đập loạn nhịp). Bác sĩ tuyến dưới bảo người bệnh này dễ bị đột quỵ lắm. Sao tim bệnh mà lại gây tai biến trên não được, tôi chưa hiểu lắm?"
+    },
+    {
+        "id": 135,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi đang đi bộ ngoài công viên thì bỗng dưng trời đất quay cuồng, ngã nhào ra ghế đá, một lúc sau mới tỉnh táo lại. Điểm này là do hạ đường huyết, thiếu máu não hay bị đột quỵ nhẹ?"
+    },
+    {
+        "id": 136,
+        "category": "Dấu hiệu & Triage",
+        "question": "Mẹ em ngủ dậy thấy một bên mặt bị liệt, mắt nhắm không kín, nước miếng tự chảy ra ở góc miệng nhưng tay chân vẫn cử động mạnh mẽ bình thường. Cái này là tai biến hay bị trúng gió độc?"
+    },
+    {
+        "id": 137,
+        "category": "Dấu hiệu & Triage",
+        "question": "Tôi bị cao huyết áp kinh niên, dạo này tối ngủ hay nghe tiếng mạch đập bình bịch ở trong tai rất rõ. Có phải áp lực máu lên não mạnh quá sắp vỡ mạch máu rồi không?"
+    },
+    {
+        "id": 138,
+        "category": "Dấu hiệu & Triage",
+        "question": "Em nghe nói có loại đột quỵ thể chảy máu và thể nhồi máu. Làm sao mình nhìn bên ngoài mà biết được người bệnh đang bị loại nào để còn biết đường mua thuốc cấp cứu bác nhỉ?"
+    },
+    {
+        "id": 139,
+        "category": "Dấu hiệu & Triage",
+        "question": "Bà nội em hay bị đau đầu, đi khám chụp CT bác sĩ bảo có ổ khuyết não cũ. Mà từ trước tới giờ bà chưa từng bị xỉu hay liệt gì cả. Cái ổ khuyết đó từ đâu ra vậy bác sĩ?"
+    },
+    {
+        "id": 140,
+        "category": "Dấu hiệu & Triage",
+        "question": "Chị gái tôi đang mang thai tháng thứ 8, tự nhiên than nhức đầu dữ dội, nhìn một hóa hai (nhìn đôi) và huyết áp tăng cao. Tình trạng này có nguy cơ dẫn đến đột quỵ thai kỳ không?"
+    },
+    {
+        "id": 141,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Bố tôi mới ra viện sau đợt nhồi máu cơ tim và tai biến nhẹ. Hàng xóm bảo từ giờ phải tuyệt đối kiêng ăn thịt bò, thịt heo vì có nhiều mỡ xấu, chỉ được ăn chay thôi. Có đúng không?"
+    },
+    {
+        "id": 142,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Mẹ tôi bị liệt nửa người nằm một chỗ sau đột quỵ. Nhà định mua yến sào với sâm nhung về chưng cho cụ ăn mỗi ngày cho mau khỏe, không biết có bổ quá hóa hại không?"
+    },
+    {
+        "id": 143,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Tôi nghe nói người bị tai biến mạch máu não là phải kiêng muối tuyệt đối, nấu ăn không được nêm tí nước mắm hay muối nào hết. Ăn lạt nhách vậy có sợ bị thiếu chất không?"
+    },
+    {
+        "id": 144,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Chồng tôi có thói quen hút thuốc lá ngày một gói, uống rượu bia cuối tuần. Ảnh mới bị đột quỵ nhẹ xuất viện, ảnh nói giờ hút ít lại ngày 2-3 điếu với uống bia lon thôi là được, có sao không bác sĩ?"
+    },
+    {
+        "id": 145,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Bà ngoại tôi sau tai biến bị nghẹn, nuốt khó, ăn cháo hay bị ho sặc sụa. Tôi có nên xay nhuyễn hết thức ăn ra như bột em bé rồi cho bà bú bằng bình sữa không?"
+    },
+    {
+        "id": 146,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Bác sĩ ơi, người bị đột quỵ có ăn được hột vịt lộn không? Nghe nói món này bổ máu lắm, định mua về bồi bổ cho ông nhà nuôi lại sức."
+    },
+    {
+        "id": 147,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Tôi bị tai biến nhồi máu não cách đây nửa năm, giờ sức khỏe ổn rồi. Tôi có thể đi tắm đêm sau 10 giờ tối như trước được không, vì đi làm về muộn quá?"
+    },
+    {
+        "id": 148,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Người nhà tôi bị liệt nửa người, đại tiểu tiện tại chỗ. Chế độ ăn cần bổ sung chất gì để cụ không bị bón? Mỗi lần cụ rặn đại tiện nhìn mặt mày đỏ gay tôi sợ cụ đứt mạch máu tiếp quá."
+    },
+    {
+        "id": 149,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Nghe nói người bị đột quỵ nên uống nhiều nước diếp cá với uống nước đậu đen xanh lòng để mát máu, tiêu mỡ, phòng ngừa tái phát. Bài thuốc này có cơ sở khoa học không bác?"
+    },
+    {
+        "id": 150,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Mẹ em bị tai biến do cao huyết áp. Giờ đồ ăn của cụ em có cần kiêng hoàn toàn mỡ động vật và thay bằng dầu ăn 100% không, hay vẫn ăn mỡ heo được?"
+    },
+    {
+        "id": 151,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Bố tôi thích ăn đồ biển như tôm, cua, mực. Từ lúc cụ bị đột quỵ đến nay nhà không cho ăn tí nào vì sợ phong và sợ tăng cholesterol. Cấm cản cụ vậy có đúng khoa học không bác sĩ?"
+    },
+    {
+        "id": 152,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Người bị tai biến có cần kiêng ra gió, kiêng máy lạnh không ạ? Nhà tôi nóng hầm hập mà không dám bật máy lạnh cho ông cụ nằm, cứ bắt ông đắp chăn kín mít vì sợ trúng gió lại."
+    },
+    {
+        "id": 153,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Tôi bị đột quỵ nhẹ, giờ đi đứng bình thường rồi. Tôi nghe nói tập thể dục buổi sáng sớm tầm 4-5 giờ lúc trời còn sương lạnh là rất tốt cho mạch máu, có đúng không bác?"
+    },
+    {
+        "id": 154,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Chồng tôi từ ngày bị tai biến xong đâm ra gắt gỏng, trầm cảm, không chịu ăn uống gì. Có chế độ dinh dưỡng nào giúp cải thiện tâm trạng và bổ não cho người bệnh không bác?"
+    },
+    {
+        "id": 155,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Bà nội em bị liệt nằm một chỗ, ăn uống bằng ống sonde dạ dày đặt qua mũi. Mỗi lần bơm sữa hay cháo loãng vào ống thì cần lưu ý tư thế nằm của bà thế nào để không bị trào ngược?"
+    },
+    {
+        "id": 156,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Tôi thấy trên mạng quảng cáo mấy loại thực phẩm chức năng của Nhật, Úc giúp 'làm sạch mạch máu', 'đánh tan huyết khối'. Người sau đột quỵ uống mấy cái này thay cơm được không?"
+    },
+    {
+        "id": 157,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Bố em bị tai biến, giờ nhà em nấu ăn bằng hạt nêm thay cho muối thì có tính là ăn lạt không bác sĩ? Nghe bảo hạt nêm ít mặn hơn muối chắc là tốt hơn?"
+    },
+    {
+        "id": 158,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Sau khi bị đột quỵ, người bệnh có cần phải kiêng sinh hoạt vợ chồng không? Chồng tôi mới 45 tuổi, bị tai biến nhẹ đã phục hồi, ảnh hỏi chuyện này mà tôi ngại không biết trả lời sao."
+    },
+    {
+        "id": 159,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Mẹ tôi thích uống cà phê sữa mỗi sáng. Sau đợt tai biến vừa rồi, cụ có phải bỏ hẳn món này không bác sĩ? Cà phê có làm tăng xông rồi đứt mạch máu não lại không?"
+    },
+    {
+        "id": 160,
+        "category": "Dinh dưỡng & Sinh hoạt",
+        "question": "Người bị đột quỵ nằm liệt giường lâu ngày thì da vùng mông bị đỏ ửng lên. Chế độ ăn uống có giúp mau lành da không và làm sao để không bị loét thêm?"
+    },
+    {
+        "id": 161,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Bác sĩ cho tôi hỏi, tôi đang uống thuốc chống đông máu Aspirin sau tai biến mà dạo này thấy người hay bị bầm tím lốm đốm dưới da, đi cầu phân hơi đen. Tôi có nên dừng thuốc lại không?"
+    },
+    {
+        "id": 162,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Mẹ tôi uống thuốc huyết áp bác sĩ cấp cho thấy huyết áp đo mấy ngày nay đều đẹp 120/80 rồi. Vậy tôi có thể tự ý giảm liều hoặc ngưng thuốc để đỡ hại gan thận không bác?"
+    },
+    {
+        "id": 163,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Tôi bị nhồi máu não, nghe người ta nói uống thuốc ngừa tai biến là phải uống suốt đời. Sao uống hoài vậy cơ thể có bị nhiễm độc thuốc không, có loại thuốc nam nào thay thế được không?"
+    },
+    {
+        "id": 164,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Bố tôi uống thuốc trị mỡ máu (Atorvastatin) tái khám định kỳ theo đơn đột quỵ, dạo này cụ cứ than đau nhức mỏi cơ bắp tay chân dữ dội. Cái này là do di chứng liệt hay tác dụng phụ của thuốc?"
+    },
+    {
+        "id": 165,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Em nghe nói thuốc chống đông máu nếu bị đứt tay là máu chảy ròng ròng không cầm được phải không bác sĩ? Lỡ người nhà em đang uống thuốc này mà cần nhổ răng hay mổ xẻ gì thì tính sao?"
+    },
+    {
+        "id": 166,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Chồng tôi được bác sĩ kê thuốc Clopidogrel sau đột quỵ. Hôm qua ảnh bị đau đầu quá, tôi ra tiệm tây mua thêm mấy viên giảm đau Ibuprofen cho ảnh uống chung được không?"
+    },
+    {
+        "id": 167,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Nhà tôi có người lớn tuổi bị cao huyết áp. Tôi nghe nói nên mua sẵn một lọ thuốc ngậm dưới lưỡi Captopril để lỡ huyết áp vọt lên cao là nhét vào miệng liền để ngừa tai biến, làm vậy đúng không bác?"
+    },
+    {
+        "id": 168,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Bà nội em đang uống thuốc chống đông Sintrom, bác sĩ dặn kiêng ăn rau muống, cải bẹ xanh, bông cải. Sao uống thuốc tai biến mà lại phải kiêng ăn rau xanh vậy bác sĩ, lạ quá?"
+    },
+    {
+        "id": 169,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Tôi bị đột quỵ xuất huyết não (vỡ mạch máu). Có người quen cho mấy viên thuốc hoạt huyết dưỡng não, bảo uống vào cho máu lưu thông lên não mau khỏe. Tôi uống được không?"
+    },
+    {
+        "id": 170,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Mẹ em uống đơn thuốc đột quỵ của bệnh viện xong cứ than bị cồn cào rát dạ dày, có khi buồn nôn. Cho em hỏi trong mấy món thuốc kháng tiểu cầu, thuốc nào hay gây đau bao tử nhất?"
+    },
+    {
+        "id": 171,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Tôi lỡ quên uống một liều thuốc chống đông máu buổi sáng, đến tối mới nhớ ra. Giờ tôi có nên uống bù gấp đôi liều vào buổi tối để bù lại không bác sĩ?"
+    },
+    {
+        "id": 172,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Bố tôi bị đột quỵ kèm tiểu đường. Dạo này uống thuốc vô thấy cụ thỉnh thoảng bị vã mồ hôi, bủn rủn tay chân, tim đập nhanh. Đây là triệu chứng của bệnh não tiến triển hay do thuốc?"
+    },
+    {
+        "id": 173,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Có người mách tôi mua Nattokinase của Nhật uống liên tục thì không bao giờ sợ bị đột quỵ lại, khỏi cần uống mấy thứ thuốc tây phát mệt. Thần dược này có thay được thuốc tây thật không bác?"
+    },
+    {
+        "id": 174,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Tôi đang điều trị đột quỵ bằng thuốc tây theo đơn, giờ muốn uống kèm thêm thuốc bắc (thuốc sắc cây lá) để mát gan giải độc thuốc tây có được không, hai thứ có đá nhau không?"
+    },
+    {
+        "id": 175,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Mẹ tôi bị suy thận độ 2 và mới bị tai biến nhồi máu não. Bác sĩ cho tôi hỏi việc dùng thuốc kháng đông dài ngày có làm tình trạng suy thận của mẹ tôi nặng lên thành chạy thận không?"
+    },
+    {
+        "id": 176,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Tôi thấy trong đơn thuốc của bố có thuốc chống trầm cảm, trong khi bố tôi bị tai biến liệt nửa người chứ đâu có bị điên hay thần kinh đâu mà bác sĩ lại cho uống thuốc này?"
+    },
+    {
+        "id": 177,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Thuốc tống máu cục (tiêu sợi huyết) đắt tiền như vậy, lỡ tiêm vào người mà bệnh nhân không tỉnh lại hoặc bị chảy máu ồ ạt trong não chết luôn thì bệnh viện có đền không bác sĩ?"
+    },
+    {
+        "id": 178,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Chồng em bị tăng huyết áp, uống thuốc đều đặn tự nhiên dạo này bị ho khan sù sù cả ngày lẫn đêm, đi khám tai mũi họng không ra bệnh. Liệu có phải do thuốc huyết áp gây ho không ạ?"
+    },
+    {
+        "id": 179,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Tôi bị mỡ máu cao, uống thuốc hạ mỡ máu thấy chỉ số về bình thường rồi. Giờ tôi ngưng thuốc chuyển sang ăn tỏi đen với uống nước lá sen để duy trì được không bác sĩ?"
+    },
+    {
+        "id": 180,
+        "category": "Dùng thuốc & Tác dụng phụ",
+        "question": "Bà ngoại em bị tai biến, mắt mờ chân yếu đi lại khó khăn. Bác sĩ kê cho thuốc gì mà uống vô bà đi tiểu suốt ngày, ban đêm cũng phải dậy đi làm bà mất ngủ thêm. Thuốc đó là thuốc gì vậy bác?"
+    },
+    {
+        "id": 181,
+        "category": "Phục hồi chức năng",
+        "question": "Mẹ tôi bị tai biến liệt nửa người bên phải tròn một tháng nay. Giờ tôi đem bà đi thầy lang để châm cứu, bấm huyệt với đắp thuốc nam ngoài da liền được chưa, hay phải chờ thêm?"
+    },
+    {
+        "id": 182,
+        "category": "Phục hồi chức năng",
+        "question": "Tôi nghe nói người bị liệt sau tai biến nếu không bóp tay chân thật mạnh, kéo duỗi thật lực là gân cơ nó rút lại cứng ngắc hư luôn. Nên mỗi ngày tôi đều kéo giãn cho bố đau chảy nước mắt mới thôi, làm vậy đúng không?"
+    },
+    {
+        "id": 183,
+        "category": "Phục hồi chức năng",
+        "question": "Bố em bị tai biến nói ngọng, nói đớ, nhiều khi muốn ú ớ mà không ra từ. Có bài tập luyện giọng hay cách nào phục hồi lại tiếng nói cho cụ không bác sĩ, nhìn cụ bất lực tội quá."
+    },
+    {
+        "id": 184,
+        "category": "Phục hồi chức năng",
+        "question": "Chồng tôi bị liệt tay thuận sau đột quỵ, giờ ảnh nản không thèm cử động cái tay đó nữa, cái gì cũng xài tay lành. Tôi có nên băng bó cái tay lành lại để ép ảnh phải xài cái tay liệt không?"
+    },
+    {
+        "id": 185,
+        "category": "Phục hồi chức năng",
+        "question": "Bác sĩ ơi, người bị tai biến nằm liệt giường thì bao lâu phải lật người một lần? Nhà tôi bận quá, sáng lật một lần tối lật một lần được không, sao thấy mông cụ bắt đầu có vết loét trợt da rồi."
+    },
+    {
+        "id": 186,
+        "category": "Phục hồi chức năng",
+        "question": "Tôi thấy trên mạng bán mấy cái găng tay robot tập phục hồi chức năng giá vài triệu, quảng cáo đeo vào là tay tự co duỗi nắm mở được. Cái này có thực sự giúp não phục hồi điều khiển tay liệt không?"
+    },
+    {
+        "id": 187,
+        "category": "Phục hồi chức năng",
+        "question": "Mẹ tôi bị di chứng chân đi vòng kiềng, bàn chân bị lật bên hông (vẹo trong) sau tai biến nên đi hay bị vấp té. Có loại nẹp hay giày gì hỗ trợ cố định cái cổ chân cho bà đi lại dễ hơn không?"
+    },
+    {
+        "id": 188,
+        "category": "Phục hồi chức năng",
+        "question": "Bác sĩ cho hỏi thời điểm vàng để tập vật lý trị liệu sau đột quỵ là khi nào? Bệnh nhân mới xuất viện còn yếu xìu, đi đứng chưa vững thì có tập nặng được chưa hay cứ nằm nghỉ ngơi cái đã?"
+    },
+    {
+        "id": 189,
+        "category": "Phục hồi chức năng",
+        "question": "Người nhà em bị tai biến nửa năm rồi, tay chân bên liệt vẫn cứng đơ, các ngón tay co quắp chặt vào lòng bàn tay không gỡ ra được. Tình trạng này giờ tập vật lý trị liệu còn hiệu quả không bác?"
+    },
+    {
+        "id": 190,
+        "category": "Phục hồi chức năng",
+        "question": "Tôi nghe nói có phương pháp cấy chỉ vào huyệt đạo để chữa liệt nửa người do tai biến, hiệu quả hơn hẳn châm cứu thông thường. Bác sĩ chuyên khoa đánh giá phương pháp này thế nào?"
+    },
+    {
+        "id": 191,
+        "category": "Phục hồi chức năng",
+        "question": "Chồng em sau tai biến bị xệ cái khớp vai bên liệt xuống, nhìn tay dài hơn tay kia và ảnh kêu đau nhức cái bả vai đó kinh khủng mỗi khi đỡ ảnh ngồi dậy. Làm sao để hết sệ vai hả bác?"
+    },
+    {
+        "id": 192,
+        "category": "Phục hồi chức năng",
+        "question": "Bà cụ nhà tôi bị tai biến, nửa người bên trái không cử động được nhưng dạo này cụ cứ than đau nhức, rát bỏng như lửa đốt ở phần tay chân bị liệt đó. Sao bị liệt mất cảm giác rồi mà vẫn biết đau vậy bác sĩ?"
+    },
+    {
+        "id": 193,
+        "category": "Phục hồi chức năng",
+        "question": "Bố tôi tập đi sau tai biến, nhà tôi mua cái xe tập đi bốn bánh có ghế ngồi cho cụ tự đẩy đi quanh nhà. Tập bằng xe này tốt hơn hay bắt cụ vịt tường đứng lên đi tốt hơn?"
+    },
+    {
+        "id": 194,
+        "category": "Phục hồi chức năng",
+        "question": "Tôi bị tai biến nhẹ, tay hơi yếu. Người ta bày mua mấy cục đất sét hoặc trái banh cao su nhỏ về bóp bóp suốt ngày để hồi phục cơ tay. Bài tập này có đúng chuẩn y học không?"
+    },
+    {
+        "id": 195,
+        "category": "Phục hồi chức năng",
+        "question": "Mẹ em bị liệt nằm một chỗ, dạo này cái đầu gối bên chân liệt nó cứng ngắc, không co duỗi ra được nữa giống như bị dính khớp luôn rồi. Giờ có cách nào làm mềm cái khớp gối đó ra lại không bác?"
+    },
+    {
+        "id": 196,
+        "category": "Phục hồi chức năng",
+        "question": "Người bị đột quỵ sau bao lâu tập luyện thì có thể tự đứng lên đi vệ sinh được? Nhà tôi neo người, cứ phải có người túc trực bế ẵm ông cụ đi vệ sinh hoài đuối quá bác sĩ ơi."
+    },
+    {
+        "id": 197,
+        "category": "Phục hồi chức năng",
+        "question": "Tôi nghe nói có phương pháp điều trị đột quỵ bằng tế bào gốc, bơm vào là người liệt đứng dậy đi lại rầm rầm. Thực hư chuyện này thế nào, ở Việt Nam mình có làm chưa bác?"
+    },
+    {
+        "id": 198,
+        "category": "Phục hồi chức năng",
+        "question": "Bố tôi bị tai biến, tay chân cử động lại được chút ít rồi nhưng tinh thần cụ sa sút lắm, cứ nhớ nhớ quên quên, ăn rồi bảo chưa ăn, tính khí như con nít. Tập bài tập gì để phục hồi cái trí não này hả bác?"
+    },
+    {
+        "id": 199,
+        "category": "Phục hồi chức năng",
+        "question": "Sau khi bị tai biến mạch máu não, có nên cho người bệnh đi tắm bùn khoáng hoặc xông hơi hồng ngoại để kích thích tuần hoàn máu, giúp các cơ mau hết liệt không?"
+    },
+    {
+        "id": 200,
+        "category": "Phục hồi chức năng",
+        "question": "Mẹ em bị liệt nửa người, khi ngủ nên cho mẹ nằm nghiêng sang bên lành hay nằm nghiêng sang bên bị liệt thì tốt hơn cho việc tuần hoàn và phục hồi thần kinh ạ?"
+    }
+]
