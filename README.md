@@ -10,7 +10,7 @@
 
 *Hệ thống trợ lý ảo sơ cứu đột quỵ y khoa chuẩn hóa theo Hướng dẫn của Bộ Y tế Việt Nam (QĐ 3312/QĐ-BYT).*
 
-[Khởi chạy nhanh](#-hướng-dẫn-khởi-chạy) • [Kiến trúc Pipeline](#-rag-pipeline-architecture) • [Tính năng nổi bật](#-tính-năng-cốt-lõi) • [Đánh giá Lâm sàng](#-chạy-thử-nghiệm-đánh-giá-lâm-sàng)
+[Khởi chạy nhanh](#-hướng-dẫn-khởi-chạy) • [Kiến trúc Pipeline](#-rag-pipeline-architecture) • [Tính năng nổi bật](#-tính-năng-cốt-lõi) • [Đánh giá Lâm sàng (EVALUATION.md)](./EVALUATION.md)
 
 </div>
 
@@ -118,6 +118,8 @@ Hệ thống tích hợp bộ đánh giá tự động dựa trên Framework ngh
 - 🚑 **Phân loại mức độ cấp cứu (Triage Accuracy):** Đạt **91.0%** (91/100 ca).
 - 🗣️ **Độ rõ ràng & Hữu ích tổng thể (Clarity & Helpfulness):** Đạt **4.77 / 5.0** và **4.59 / 5.0** (Thang điểm Likert 1-5).
 - 💬 **Độ tự nhiên & Đồng cảm trong giao tiếp (Conversational Explanation):** Đạt tuyệt đối **100%** (100/100 ca) nhờ tối ưu hóa cấu trúc prompt tự nhiên.
+
+👉 **Xem chi tiết tài liệu quy trình, thiết kế cấu trúc prompt CARDS và phân tích y khoa tại: [Tài liệu Đánh giá Lâm sàng (EVALUATION.md)](./EVALUATION.md)**
 
 Để chạy kiểm thử tự động:
 
